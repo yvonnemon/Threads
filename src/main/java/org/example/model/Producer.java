@@ -1,6 +1,6 @@
 package org.example.model;
 
-public class Producer {
+public class Producer implements Runnable {
     private Stauts status;
     private Integer startTime;
 
@@ -9,8 +9,12 @@ public class Producer {
 
     private ResourceType resourceType;
 
-    public void produce(ResourceType resource) {
-        resource.addResource();
+    public Producer(ResourceType resourceType) {
+        this.resourceType = resourceType;
+    }
+
+    public void produce() {
+        this.resourceType.addResource();
     }
 
     public Stauts getStatus() {
@@ -51,5 +55,24 @@ public class Producer {
 
     public void setResourceType(ResourceType resourceType) {
         this.resourceType = resourceType;
+    }
+
+    @Override
+    public void run() {
+
+        //System.out.println(Thread.currentThread().getName() + " started, state: " + Thread.currentThread().getState());
+
+        try {
+            //System.out.println(Thread.currentThread().getName() + " started, state: " + Thread.currentThread().getState());
+            Thread.sleep(1000);  // This makes the thread enter TIMED_WAITING
+            //System.out.println(Thread.currentThread().getName() + " finished, state: " + Thread.currentThread().getState());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            System.out.println("INTERRUPTEDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
+        }
+        status = Stauts.NEW;
+        produce();  // Calls ClassA.add()
+
+
     }
 }
