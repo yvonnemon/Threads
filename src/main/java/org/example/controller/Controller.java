@@ -1,43 +1,35 @@
 package org.example.controller;
 
 import org.example.model.Consumer;
+import org.example.model.Model;
 import org.example.model.Producer;
 import org.example.model.ResourceType;
+import org.example.view.ConfigPanel;
+import org.example.view.DataPanel;
+import org.example.view.MainFrame;
 
 import java.util.ArrayList;
 
 public class Controller {
-    //THINK aqui tiene que haber los getters y setters del front
-    //pero extiende de algo?
+    //todo CONSUMIDORES Y PRODUCTORES SE CREAN EN EL MODELO
+    public static void startButton(){
+        //TODO get data
+        Model x = ConfigPanel.getConfigData(); //THINK es un array doble: [0-primer objeto][0-field name]
+        System.out.println("hola");
+        Model model = new Model(
+                x.getTotalResources(),
+                x.getMaxResources(),
+                x.getMinResources(),
+                x.getNumberOfProducers(),
+                x.getNumberOfConsumers(),
+                x.getStartDelayMin(),
+                x.getStartDelayMax(),
+                x.getProducerDelayMin(),
+                x.getProducerDelayMax(),
+                x.getConsumerDelayMin(),
+                x.getConsumerDelayMax()
+        );
 
-    public static void startButton(){ //THINK este deberia tener por parametro: el min y max de recursos
-                                       //for i en total > crear resources; for i en resources > crear produces/consumers
-                                        //pero el total es un random entre el max y min
-        System.out.println("button play clicked");
-        ResourceType resourceType = new ResourceType(); //segun la config se pueden crear mas etc
-        //THINK a estos dos habria que añadirles parametro al consutrcor, los delays no se donde van
-        ArrayList<Consumer> consumers = new ArrayList<>();
-        ArrayList<Producer> producers = new ArrayList<>();
-
-
-        //TODO i < # producers/consumers
-        // crear las listas de consumes y producers
-        for (int i = 0; i < 10000; i++) {
-            consumers.add(new Consumer(resourceType)); //THINK seria añadir el constructor con los randoms datos aqui?
-        }
-        for (int i = 0; i < 10000; i++) {
-            producers.add(new Producer(resourceType));
-        }
-
-        resourceType.setConsumers(consumers);
-        resourceType.setProducers(producers);
-
-        //TODO play como accion de jugar? en plan empezar? execute?
-        resourceType.startTheThing();
-
-
-        // Define Button 1 functionality here
-        // JOptionPane.showMessageDialog(null, "Button 1 clicked!");
     }
 
     public static void stopButton(){

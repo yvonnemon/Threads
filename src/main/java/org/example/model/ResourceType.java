@@ -12,20 +12,13 @@ public class ResourceType {
     private ArrayList<Consumer> consumers = new ArrayList<Consumer>();
 
     public synchronized void addResource(){
-        System.out.println("addResource quantity++" + quantity);
-       // System.out.println(Thread.currentThread().getName() + " about to add, state: " + Thread.currentThread().getState());
+       // System.out.println("addResource quantity++" + quantity);
         quantity++;
-
-       // System.out.println(Thread.currentThread().getName() + " added value, new value: " + quantity);
     }
 
     public synchronized void removeResource(){
-        System.out.println("removeResource quantity--" + quantity);
-       // System.out.println(Thread.currentThread().getName() + " about to add, state: " + Thread.currentThread().getState());
+       // System.out.println("removeResource quantity--" + quantity);
         quantity--;
-
-        //System.out.println(Thread.currentThread().getName() + " added value, new value: " + quantity);
-
     }
 
     public void startTheThing(){

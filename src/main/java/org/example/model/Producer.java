@@ -61,18 +61,20 @@ public class Producer implements Runnable {
     public void run() {
 
         //System.out.println(Thread.currentThread().getName() + " started, state: " + Thread.currentThread().getState());
+        //TODO cada producer/consumer repite su accion x veces
 
         try {
-            //System.out.println(Thread.currentThread().getName() + " started, state: " + Thread.currentThread().getState());
-            Thread.sleep(1000);  // This makes the thread enter TIMED_WAITING
-            //System.out.println(Thread.currentThread().getName() + " finished, state: " + Thread.currentThread().getState());
+            for (int i = 0; i < 1000; i++) {
+                //System.out.println(Thread.currentThread().getName() + " started, state: " + Thread.currentThread().getState());
+                Thread.sleep(1);  // This makes the thread enter TIMED_WAITING
+                //System.out.println(Thread.currentThread().getName() + " finished, state: " + Thread.currentThread().getState());
+                //status = Stauts.NEW;
+                produce();  // Calls ClassA.add()
+
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
             System.out.println("INTERRUPTEDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
         }
-        status = Stauts.NEW;
-        produce();  // Calls ClassA.add()
-
-
     }
 }
