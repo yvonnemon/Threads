@@ -1,5 +1,5 @@
 package org.example.model;
 
 public enum Stauts {
-    IDLE, RUNNING, STOP
+    NEW, RUNNABLE, BLOCKED, WAITING, TIMED_WAITING, TERMINATED
 }

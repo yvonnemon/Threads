@@ -1,6 +1,6 @@
 package org.example.model;
 
-public class Consumer {
+public class Consumer implements Runnable {
     private Stauts status;
     private Integer startTime;
     private Integer maxDelay;
@@ -8,8 +8,12 @@ public class Consumer {
 
     private ResourceType resourceType;
 
-    public void consume(ResourceType resource) {
-        resource.removeResource();
+    public Consumer(ResourceType resourceType) {
+        this.resourceType = resourceType;
+    }
+
+    public void consume() {
+        this.resourceType.removeResource();
     }
 
     public Stauts getStatus() {
@@ -50,5 +54,22 @@ public class Consumer {
 
     public void setResourceType(ResourceType resourceType) {
         this.resourceType = resourceType;
+    }
+
+    @Override
+    public void run() {
+        try {
+            for (int i = 0; i < 1000; i++) {
+                //System.out.println(Thread.currentThread().getName() + " started, state: " + Thread.currentThread().getState());
+                Thread.sleep(1);  // This makes the thread enter TIMED_WAITING
+                //System.out.println(Thread.currentThread().getName() + " finished, state: " + Thread.currentThread().getState());
+                //status = Stauts.NEW;
+                consume();  // Calls ClassA.add()
+
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            System.out.println("INTERRUPTEDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
+        }
     }
 }
