@@ -17,19 +17,19 @@ public class ThreadManager {
         public static Object[][] getThreadData(List<? extends Runnable> threads) {
             Object[][] data = new Object[threads.size()][3];
             for (int i = 0; i < threads.size(); i++) {
-                if (threads.get(i) instanceof ResourceType a) {
-                    data[i][0] = a.getName();
-                    data[i][1] = a.getId();
-                    data[i][2] = a.getChangingValue(); // Only the changing value updates
-                } else if (threads.get(i) instanceof Producer b) {
-                    data[i][0] = b.getName();
-                    data[i][1] = b.getId();
-                    data[i][2] = b.getChangingValue();
-                } else if (threads.get(i) instanceof Consumer c) {
-                    data[i][0] = c.getName();
-                    data[i][1] = c.getId();
-                    data[i][2] = c.getChangingValue();
-                }
+//                if (threads.get(i) instanceof ResourceType a) {
+//                    data[i][0] = a.getName();
+//                    data[i][1] = a.getId();
+//                    data[i][2] = a.getChangingValue(); // Only the changing value updates
+//                } else if (threads.get(i) instanceof Producer b) {
+//                    data[i][0] = b.getName();
+//                    data[i][1] = b.getId();
+//                    data[i][2] = b.getChangingValue();
+//                } else if (threads.get(i) instanceof Consumer c) {
+//                    data[i][0] = c.getName();
+//                    data[i][1] = c.getId();
+//                    data[i][2] = c.getChangingValue();
+//                }
             }
             return data;
         }

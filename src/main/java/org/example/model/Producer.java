@@ -4,7 +4,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Producer implements Runnable {
     private Stauts status;
-    private Integer startTime;
+    private Integer startTime; //TODO un print de time stamp
 
     private Integer maxDelay;
     private Integer minDelay;
@@ -63,8 +63,6 @@ public class Producer implements Runnable {
 
     @Override
     public void run() {
-
-        //System.out.println(Thread.currentThread().getName() + " started, state: " + Thread.currentThread().getState());
         //TODO cada producer/consumer repite su accion x veces
         try {
             int delay = ThreadLocalRandom.current().nextInt(this.minDelay, this.maxDelay + 1);

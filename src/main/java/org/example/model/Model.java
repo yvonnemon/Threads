@@ -29,10 +29,6 @@ public class Model {
     private ArrayList<Consumer> consumers = new ArrayList<>();
     private ArrayList<Producer> producers = new ArrayList<>();
 
-//    public Model(Object[][] datas) {
-//        startButton(datas);
-//    }
-
     public Model() {
     }
 
@@ -63,17 +59,14 @@ public class Model {
         for (int i = 0; i < this.totalResources; i++) {
             ResourceType resourceType = new ResourceType();
 
-            //THINK a estos dos habria que añadirles parametro al consutrcor, los delays no se donde van
+            //THINK los delays no se donde van
 
-            //TODO i < # producers/consumers
-            // crear las listas de consumes y producers
+            //TODO crear las listas de consumes y producers
             int consumersNumber = this.numberOfConsumers;
             int producerNumbers = this.numberOfProducers;
-//            int consumerDelay = ThreadLocalRandom.current().nextInt(this.consumerDelayMin, this.consumerDelayMax + 1);
-//            int producerDelay = ThreadLocalRandom.current().nextInt(this.producerDelayMin, this.producerDelayMax + 1);;
 
             for (int c = 0; c < consumersNumber; c++) {
-                consumers.add(new Consumer(resourceType, this.consumerDelayMax, this.consumerDelayMin)); //THINK seria añadir el constructor con los randoms datos aqui?
+                consumers.add(new Consumer(resourceType, this.consumerDelayMax, this.consumerDelayMin));
             }
             for (int p = 0; p < producerNumbers; p++) {
                 producers.add(new Producer(resourceType, this.producerDelayMax, this.producerDelayMin));
@@ -82,8 +75,7 @@ public class Model {
             resourceType.setConsumers(consumers);
             resourceType.setProducers(producers);
 
-            //TODO play como accion de jugar? en plan empezar? execute?
-            //THINK pasar parametros lo que se consiguio en data
+            //THINK a lo mejor esto tendria que estar aqui, tbh lo pondria en el controller
             resourceType.startTheThing();
         }
     }
