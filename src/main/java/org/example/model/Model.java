@@ -3,6 +3,7 @@ package org.example.model;
 import org.example.view.ConfigPanel;
 
 import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Model {
 
@@ -52,7 +53,7 @@ public class Model {
         startButton();
     }
 
-    private void startButton(){ //THINK este deberia tener por parametro: el min y max de recursos
+    private void startButton(){
         //for i en total > crear resources; for i en resources > crear produces/consumers
         //pero el total es un random entre el max y min
 
@@ -66,14 +67,16 @@ public class Model {
 
             //TODO i < # producers/consumers
             // crear las listas de consumes y producers
-            int randomConsumer;
-            int randomProducer;
+            int consumersNumber = this.numberOfConsumers;
+            int producerNumbers = this.numberOfProducers;
+//            int consumerDelay = ThreadLocalRandom.current().nextInt(this.consumerDelayMin, this.consumerDelayMax + 1);
+//            int producerDelay = ThreadLocalRandom.current().nextInt(this.producerDelayMin, this.producerDelayMax + 1);;
 
-            for (int c = 0; c < 50; c++) {
-                consumers.add(new Consumer(resourceType)); //THINK seria añadir el constructor con los randoms datos aqui?
+            for (int c = 0; c < consumersNumber; c++) {
+                consumers.add(new Consumer(resourceType, this.consumerDelayMax, this.consumerDelayMin)); //THINK seria añadir el constructor con los randoms datos aqui?
             }
-            for (int p = 0; p < 50; p++) {
-                producers.add(new Producer(resourceType));
+            for (int p = 0; p < producerNumbers; p++) {
+                producers.add(new Producer(resourceType, this.producerDelayMax, this.producerDelayMin));
             }
 
             resourceType.setConsumers(consumers);

@@ -14,7 +14,7 @@ public class TablePanel extends JPanel {
         setBorder(BorderFactory.createTitledBorder(title));
 
         // Create table model with 3 columns
-        tableModel = new DefaultTableModel(new Object[]{"Column 1", "Column 2", "Column 3"}, 0);
+        tableModel = new DefaultTableModel(new Object[]{"Thread ID", "Column 2", "Column 3"}, 0);
         table = new JTable(tableModel);
 
         // Wrap table in a scroll pane
@@ -34,5 +34,14 @@ public class TablePanel extends JPanel {
 
     public DefaultTableModel getTableModel() {
         return tableModel;
+    }
+
+    public void updateTableData(Object[][] newData) {
+        SwingUtilities.invokeLater(() -> {
+            tableModel.setRowCount(0); // Clear table before updating
+            for (Object[] row : newData) {
+                tableModel.addRow(row);
+            }
+        });
     }
 }

@@ -1,5 +1,7 @@
 package org.example.model;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public class Producer implements Runnable {
     private Stauts status;
     private Integer startTime;
@@ -9,8 +11,10 @@ public class Producer implements Runnable {
 
     private ResourceType resourceType;
 
-    public Producer(ResourceType resourceType) {
+    public Producer(ResourceType resourceType, int maxDelay, int minDelay) {
         this.resourceType = resourceType;
+        this.maxDelay = maxDelay;
+        this.minDelay = minDelay;
     }
 
     public void produce() {
@@ -62,8 +66,9 @@ public class Producer implements Runnable {
 
         //System.out.println(Thread.currentThread().getName() + " started, state: " + Thread.currentThread().getState());
         //TODO cada producer/consumer repite su accion x veces
-
         try {
+            int delay = ThreadLocalRandom.current().nextInt(this.minDelay, this.maxDelay + 1);
+            Thread.sleep(100L *delay);
             for (int i = 0; i < 1000; i++) {
                 //System.out.println(Thread.currentThread().getName() + " started, state: " + Thread.currentThread().getState());
                 Thread.sleep(1);  // This makes the thread enter TIMED_WAITING

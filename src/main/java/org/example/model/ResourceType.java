@@ -8,21 +8,26 @@ public class ResourceType {
     private Integer minQuantity;
     private Integer maxQuantity;
     //THINK entonces tiene una lista de consumers y producers
-    private ArrayList<Producer> producers = new ArrayList<Producer>();
-    private ArrayList<Consumer> consumers = new ArrayList<Consumer>();
+    private ArrayList<Producer> producers;
+    private ArrayList<Consumer> consumers;
 
     public synchronized void addResource(){
-       // System.out.println("addResource quantity++" + quantity);
+       //System.out.println("addResource quantity++" + quantity);
+        System.out.println("Thread ID in add: " + Thread.currentThread().threadId());
+
+
+
         quantity++;
     }
 
     public synchronized void removeResource(){
-       // System.out.println("removeResource quantity--" + quantity);
+       //System.out.println("removeResource quantity--" + quantity);
+        System.out.println("Thread ID in remove: " + Thread.currentThread().threadId());
         quantity--;
     }
 
-    public void startTheThing(){
-        List<Thread> threads = new ArrayList<>();
+    public void startTheThing(){ //THINK este deberia ser el que pida los parametros de delay?
+        List<Thread> threads = new ArrayList<>(); //TODO cambiar a una lista de cada
 
         for (Producer producer : producers) {
             Thread t = new Thread(producer);

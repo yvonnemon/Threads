@@ -2,11 +2,13 @@ package org.example.view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Random;
 
 public class MainFrame extends JFrame {
 
     private static MainFrame instance; // Static reference
     private ConfigPanel configPanel;
+    private DataPanel dataPanel;
 
     public MainFrame() {
         setTitle("ThreadLab");
@@ -21,19 +23,51 @@ public class MainFrame extends JFrame {
         add(new ControlPanel(), BorderLayout.WEST);  // Left panel
         add(new ConfigPanel(), BorderLayout.CENTER); // Center panel
 
-        DataPanel dataPanel = new DataPanel();
+        dataPanel = new DataPanel();
         add(new DataPanel(), BorderLayout.EAST); // Right panel
         add(dataPanel, BorderLayout.EAST);
 
         //TODO
-        // Add rows dynamically to the tables in JPanel1, JPanel2, and JPanel3
-        dataPanel.addRowToPanel1(new Object[]{"Row 1 - Col 1", "Row 1 - Col 2", "Row 1 - Col 3"});
-        dataPanel.addRowToPanel1(new Object[]{"Row 2 - Col 1", "Row 2 - Col 2", "Row 2 - Col 3"});
+        startBackgroundUpdates();
+    }
+    private void startBackgroundUpdates() {
+        new SwingWorker<Void, Void>() {
+            @Override
+            protected Void doInBackground() {
+                Random random = new Random();
+                while (true) {
+                    try {
+                        Thread.sleep(2000); // Update every 2 seconds
 
-        dataPanel.addRowToPanel2(new Object[]{"Row 1 - Col 1", "Row 1 - Col 2", "Row 1 - Col 3"});
+                        // 🟢 Generate Random Data for Testing
+                        Object[][] data1 = {
+                                {"Item A", random.nextInt(100), "✓"},
+                                {"Item B", random.nextInt(100), "✓"}
+                        };
 
-        dataPanel.addRowToPanel3(new Object[]{"Row 1 - Col 1", "Row 1 - Col 2", "Row 1 - Col 3"});
-        dataPanel.addRowToPanel3(new Object[]{"Row 2 - Col 1", "Row 2 - Col 2", "Row 2 - Col 3"});
+                        Object[][] data2 = {
+                                {"Process X", random.nextInt(50), "Running"},
+                                {"Process Y", random.nextInt(50), "Stopped"}
+                        };
+
+                        Object[][] data3 = {
+                                {"Task 1", random.nextInt(10), "Pending"},
+                                {"Task 2", random.nextInt(10), "Completed"}
+                        };
+
+                        // 🟢 Update Tables in RightPanel (Thread-Safe)
+                        SwingUtilities.invokeLater(() -> {
+                            dataPanel.updatePanel1(data1);
+                            dataPanel.updatePanel2(data2);
+                            dataPanel.updatePanel3(data3);
+                        });
+
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }.execute();
     }
 
     // Getter for the static instance

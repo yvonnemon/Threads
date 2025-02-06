@@ -56,31 +56,31 @@ public class ConfigPanel extends JPanel {
 
         for (int row = 0; row < rowCount; row++) {
                // data[row][col] = tableModel.getValueAt(row, col);
-                
-                if (tableModel.getValueAt(row, 0).equals("totalResources")) {
-                    data.setTotalResources(Integer.parseInt(tableModel.getValueAt(row, 0).toString()));
-                } else if (tableModel.getValueAt(row, 0).equals("maxResources")) {
-                    data.setMaxResources(Integer.parseInt(tableModel.getValueAt(row, 0).toString()));
-                } else if (tableModel.getValueAt(row, 0).equals("minResources")) {
-                    data.setMinResources(Integer.parseInt(tableModel.getValueAt(row, 0).toString()));
-                } else if (tableModel.getValueAt(row, 0).equals("numberOfProducers")) {
-                    data.setNumberOfProducers(Integer.parseInt(tableModel.getValueAt(row, 0).toString()));
-                } else if (tableModel.getValueAt(row, 0).equals("numberOfConsumers")) {
-                    data.setNumberOfConsumers(Integer.parseInt(tableModel.getValueAt(row, 0).toString()));
-                } else if (tableModel.getValueAt(row, 0).equals("startDelayMin")) {
-                    data.setStartDelayMin(Integer.parseInt(tableModel.getValueAt(row, 0).toString()));
-                } else if (tableModel.getValueAt(row, 0).equals("startDelayMax")) {
-                    data.setStartDelayMax(Integer.parseInt(tableModel.getValueAt(row, 0).toString()));
-                } else if (tableModel.getValueAt(row, 0).equals("producerDelayMin")) {
-                    data.setProducerDelayMin(Integer.parseInt(tableModel.getValueAt(row, 0).toString()));
-                } else if (tableModel.getValueAt(row, 0).equals("producerDelayMax")) {
-                    data.setProducerDelayMax(Integer.parseInt(tableModel.getValueAt(row, 0).toString()));
-                } else if (tableModel.getValueAt(row, 0).equals("consumerDelayMin")) {
-                    data.setConsumerDelayMin(Integer.parseInt(tableModel.getValueAt(row, 0).toString()));
-                } else if (tableModel.getValueAt(row, 0).equals("consumerDelayMax")) {
-                    data.setConsumerDelayMax(Integer.parseInt(tableModel.getValueAt(row, 0).toString()));
+
+                if (tableModel.getValueAt(row, 0).equals("Total Resources")) {
+                   data.setTotalResources(Integer.parseInt(tableModel.getValueAt(row, 1).toString()));
+                } else if (tableModel.getValueAt(row, 0).equals("Max resources")) {
+                    data.setMaxResources(Integer.parseInt(tableModel.getValueAt(row, 1).toString()));
+                } else if (tableModel.getValueAt(row, 0).equals("Min resources")) {
+                    data.setMinResources(Integer.parseInt(tableModel.getValueAt(row, 1).toString()));
+                } else if (tableModel.getValueAt(row, 0).equals("Number of producers")) {
+                    data.setNumberOfProducers(Integer.parseInt(tableModel.getValueAt(row, 1).toString()));
+                } else if (tableModel.getValueAt(row, 0).equals("Number of consumers")) {
+                    data.setNumberOfConsumers(Integer.parseInt(tableModel.getValueAt(row, 1).toString()));
+                } else if (tableModel.getValueAt(row, 0).equals("Start Delay Min")) {
+                    data.setStartDelayMin(Integer.parseInt(tableModel.getValueAt(row, 1).toString()));
+                } else if (tableModel.getValueAt(row, 0).equals("Start Delay Max")) {
+                    data.setStartDelayMax(Integer.parseInt(tableModel.getValueAt(row, 1).toString()));
+                } else if (tableModel.getValueAt(row, 0).equals("Producer Delay Min")) {
+                    data.setProducerDelayMin(Integer.parseInt(tableModel.getValueAt(row, 1).toString()));
+                } else if (tableModel.getValueAt(row, 0).equals("Producer Delay Max")) {
+                    data.setProducerDelayMax(Integer.parseInt(tableModel.getValueAt(row, 1).toString()));
+                } else if (tableModel.getValueAt(row, 0).equals("Consumer Delay Min")) {
+                    data.setConsumerDelayMin(Integer.parseInt(tableModel.getValueAt(row, 1).toString()));
+                } else if (tableModel.getValueAt(row, 0).equals("Consumer Delay Max")) {
+                    data.setConsumerDelayMax(Integer.parseInt(tableModel.getValueAt(row, 1).toString()));
                 } else {
-                    System.out.println("Invalid variable name: " + tableModel.getValueAt(row, 0).toString());
+                    System.out.println("Invalid variable name: " + tableModel.getValueAt(row, 1).toString());
                 }
             
         }

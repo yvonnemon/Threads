@@ -1,5 +1,7 @@
 package org.example.model;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public class Consumer implements Runnable {
     private Stauts status;
     private Integer startTime;
@@ -8,8 +10,10 @@ public class Consumer implements Runnable {
 
     private ResourceType resourceType;
 
-    public Consumer(ResourceType resourceType) {
+    public Consumer(ResourceType resourceType, int maxDelay, int minDelay) {
         this.resourceType = resourceType;
+        this.maxDelay = maxDelay;
+        this.minDelay = minDelay;
     }
 
     public void consume() {
@@ -59,6 +63,8 @@ public class Consumer implements Runnable {
     @Override
     public void run() {
         try {
+            int delay = ThreadLocalRandom.current().nextInt(this.minDelay, this.maxDelay + 1);
+            Thread.sleep(100L *delay);
             for (int i = 0; i < 1000; i++) {
                 //System.out.println(Thread.currentThread().getName() + " started, state: " + Thread.currentThread().getState());
                 Thread.sleep(1);  // This makes the thread enter TIMED_WAITING
