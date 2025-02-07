@@ -13,7 +13,8 @@ public class ButtonPlay extends JButton {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //buttonStart();
-                Controller.startButton();
+                Controller c = new Controller();
+                c.startButton();
             }
         });
     }

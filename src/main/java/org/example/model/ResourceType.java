@@ -14,17 +14,19 @@ public class ResourceType {
     public synchronized void addResource(){
        //System.out.println("addResource quantity++" + quantity);
         //if(Thread.currentThread().threadId() ==40){
-            System.out.println(quantity + "Thread ID in add: " + Thread.currentThread().threadId());
+
        // }
         quantity++;
+        System.out.println(quantity + "Thread ID in add: " + Thread.currentThread().threadId());
     }
 
     public synchronized void removeResource(){
        //System.out.println("removeResource quantity--" + quantity);
         //if(Thread.currentThread().threadId() ==40){
-            System.out.println(quantity + "Thread ID in remove: " + Thread.currentThread().threadId());
+
         //}
         quantity--;
+        System.out.println(quantity + "Thread ID in remove: " + Thread.currentThread().threadId());
     }
 
 

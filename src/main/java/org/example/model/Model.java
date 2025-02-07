@@ -34,6 +34,7 @@ public class Model {
         //for i en total > crear resources; for i en resources > crear produces/consumers
         //pero el total es un random entre el max y min
 
+        //THINK este bucle esta mal
         System.out.println("button play clicked");
          //segun la config se pueden crear mas etc
         //THINK esto se podria meter a una lista de resources para verlo en el swing
@@ -50,6 +51,9 @@ public class Model {
             //THINK a lo mejor esto tendria que estar aqui, tbh lo pondria en el controller
             startTheKnitting();
         }
+        System.out.println("Producers: " + producers.size());
+        System.out.println("Consumers: " + consumers.size());
+
     }
 
     private void startTheKnitting(){
@@ -61,6 +65,7 @@ public class Model {
         for (Producer producer : producers) {
             Thread t = new Thread(producer);
             threads.add(t);
+            //TODO creo que aqui va el start delay, no en el run
             t.start();
         }
         for (Consumer consumer : consumers) {
@@ -77,6 +82,7 @@ public class Model {
                 e.printStackTrace();
             }
         }
+
         System.out.println("All threads have finished execution.");
     }
 

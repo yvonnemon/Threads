@@ -1,5 +1,7 @@
 package org.example.view;
 
+import org.example.model.Model;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.Random;
@@ -10,7 +12,7 @@ public class MainFrame extends JFrame {
     private ConfigPanel configPanel;
     private DataPanel dataPanel;
 
-    public MainFrame() {
+    public MainFrame(Model model) {
         setTitle("ThreadLab");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 600);
@@ -28,14 +30,15 @@ public class MainFrame extends JFrame {
         add(dataPanel, BorderLayout.EAST);
 
         //TODO
-        startBackgroundUpdates();
+        //startBackgroundUpdates(model);
     }
 
-    private void startBackgroundUpdates() {
+    public void startBackgroundUpdates(Model model) {
         new SwingWorker<Void, Void>() {
             @Override
             protected Void doInBackground() {
                 Random random = new Random();
+
                 while (true) {
                     try {
                         Thread.sleep(1000); // Update every 2 seconds
