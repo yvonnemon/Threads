@@ -62,6 +62,7 @@ public class Consumer implements Runnable {
 
     @Override
     public void run() {
+        //THINK porque esta cosa era un loop infinito quje solo se tenia que parar con el boton de stop
         try {
             int delay = ThreadLocalRandom.current().nextInt(this.minDelay, this.maxDelay + 1);
             Thread.sleep(100L *delay);

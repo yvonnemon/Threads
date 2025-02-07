@@ -1,6 +1,6 @@
 package org.example.model;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.List;
 
 public class ResourceType {
@@ -8,18 +8,14 @@ public class ResourceType {
     private Integer minQuantity;
     private Integer maxQuantity;
     //THINK entonces tiene una lista de consumers y producers
-    private ArrayList<Producer> producers;
-    private ArrayList<Consumer> consumers;
+    private List<Producer> producers;
+    private List<Consumer> consumers;
 
     public synchronized void addResource(){
        //System.out.println("addResource quantity++" + quantity);
         //if(Thread.currentThread().threadId() ==40){
             System.out.println(quantity + "Thread ID in add: " + Thread.currentThread().threadId());
        // }
-
-
-
-
         quantity++;
     }
 
@@ -31,31 +27,6 @@ public class ResourceType {
         quantity--;
     }
 
-    public void startTheThing(){ //THINK este deberia ser el que pida los parametros de delay?
-        List<Thread> threads = new ArrayList<>(); //TODO cambiar a una lista de cada
-
-        for (Producer producer : producers) {
-            Thread t = new Thread(producer);
-            threads.add(t);
-            t.start();
-        }
-        for (Consumer consumer : consumers) {
-            Thread t = new Thread(consumer);
-            threads.add(t);
-            t.start();
-        }
-
-        // Wait for all threads to finish
-        for (Thread t : threads) {
-            try {
-                t.join();  // Waits for thread t to complete
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-
-        System.out.println("All threads have finished execution.");
-    }
 
     public synchronized int getQuantity() {
         return quantity;
@@ -81,19 +52,19 @@ public class ResourceType {
         this.maxQuantity = maxQuantity;
     }
 
-    public ArrayList<Producer> getProducers() {
+    public List<Producer> getProducers() {
         return producers;
     }
 
-    public void setProducers(ArrayList<Producer> producers) {
+    public void setProducers(List<Producer> producers) {
         this.producers = producers;
     }
 
-    public ArrayList<Consumer> getConsumers() {
+    public List<Consumer> getConsumers() {
         return consumers;
     }
 
-    public void setConsumers(ArrayList<Consumer> consumers) {
+    public void setConsumers(List<Consumer> consumers) {
         this.consumers = consumers;
     }
 

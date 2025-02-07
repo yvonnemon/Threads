@@ -30,6 +30,7 @@ public class MainFrame extends JFrame {
         //TODO
         startBackgroundUpdates();
     }
+
     private void startBackgroundUpdates() {
         new SwingWorker<Void, Void>() {
             @Override
@@ -37,7 +38,7 @@ public class MainFrame extends JFrame {
                 Random random = new Random();
                 while (true) {
                     try {
-                        Thread.sleep(2000); // Update every 2 seconds
+                        Thread.sleep(1000); // Update every 2 seconds
 
                         // 🟢 Generate Random Data for Testing
                         Object[][] data1 = {

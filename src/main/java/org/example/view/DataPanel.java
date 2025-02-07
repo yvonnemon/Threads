@@ -24,21 +24,9 @@ public class DataPanel extends JPanel {
         add(panel3);
     }
 
-    // 🔥 Thread-Safe: Methods to update each table
+    //  Thread-Safe: Methods to update each table
     public void updatePanel1(Object[][] data) { panel1.updateTableData(data); }
     public void updatePanel2(Object[][] data) { panel2.updateTableData(data); }
     public void updatePanel3(Object[][] data) { panel3.updateTableData(data); }
 
-//    // Example of how to add rows to the tables
-//    public void addRowToPanel1(Object[] rowData) {
-//        panel1.addRow(rowData);
-//    }
-//
-//    public void addRowToPanel2(Object[] rowData) {
-//        panel2.addRow(rowData);
-//    }
-//
-//    public void addRowToPanel3(Object[] rowData) {
-//        panel3.addRow(rowData);
-//    }
 }

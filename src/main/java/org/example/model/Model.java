@@ -1,14 +1,10 @@
 package org.example.model;
 
-import org.example.view.ConfigPanel;
-
 import java.util.ArrayList;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.List;
 
 public class Model {
 
-    //THINK aqui tiene que haber los getters y setters del front
-    //pero extiende de algo?
     private int totalResources = 5;
 
     private int maxResources;
@@ -20,65 +16,84 @@ public class Model {
     private int startDelayMin;
     private int startDelayMax;
 
-    private int producerDelayMin = 5;
+    private int producerDelayMin;
     private int producerDelayMax;
 
     private int consumerDelayMin;
     private int consumerDelayMax;
 
-    private ArrayList<Consumer> consumers = new ArrayList<>();
-    private ArrayList<Producer> producers = new ArrayList<>();
+    private List<Consumer> consumers = new ArrayList<>();
+    private List<Producer> producers = new ArrayList<>();
+    private List<ResourceType> resources = new ArrayList<>();
+
 
     public Model() {
     }
 
-    public Model(int totalResources, int maxResources, int minResources, int numberOfProducers, int numberOfConsumers, int startDelayMin,
-                 int startDelayMax, int producerDelayMin, int producerDelayMax, int consumerDelayMin, int consumerDelayMax) {
-        this.totalResources = totalResources;
-        this.maxResources = maxResources;
-        this.minResources = minResources;
-        this.numberOfProducers = numberOfProducers;
-        this.numberOfConsumers = numberOfConsumers;
-        this.startDelayMin = startDelayMin;
-        this.startDelayMax = startDelayMax;
-        this.producerDelayMin = producerDelayMin;
-        this.producerDelayMax = producerDelayMax;
-        this.consumerDelayMin = consumerDelayMin;
-        this.consumerDelayMax = consumerDelayMax;
-
-        startButton();
-    }
-
-    private void startButton(){
+    public void startButton(){
         //for i en total > crear resources; for i en resources > crear produces/consumers
         //pero el total es un random entre el max y min
 
-
         System.out.println("button play clicked");
          //segun la config se pueden crear mas etc
+        //THINK esto se podria meter a una lista de resources para verlo en el swing
         for (int i = 0; i < this.totalResources; i++) {
             ResourceType resourceType = new ResourceType();
 
-            //THINK los delays no se donde van
+            //crear las listas de consumes y producers
+            createConsumers(resourceType);
+            createProducers(resourceType);
 
-            //TODO crear las listas de consumes y producers
-            int consumersNumber = this.numberOfConsumers;
-            int producerNumbers = this.numberOfProducers;
-
-            for (int c = 0; c < consumersNumber; c++) {
-                consumers.add(new Consumer(resourceType, this.consumerDelayMax, this.consumerDelayMin));
-            }
-            for (int p = 0; p < producerNumbers; p++) {
-                producers.add(new Producer(resourceType, this.producerDelayMax, this.producerDelayMin));
-            }
-
-            resourceType.setConsumers(consumers);
-            resourceType.setProducers(producers);
+            resourceType.setConsumers(this.consumers);
+            resourceType.setProducers(this.producers);
 
             //THINK a lo mejor esto tendria que estar aqui, tbh lo pondria en el controller
-            resourceType.startTheThing();
+            startTheKnitting();
         }
     }
+
+    private void startTheKnitting(){
+
+        List<Thread> threads = new ArrayList<>(); //TODO cambiar a una lista de cada porque creo que los necesito para pintarlos
+
+        //THINK a ver, crear una lista de resources, #? user input -> por cada recurso, crear producer/consumer, #? user input
+
+        for (Producer producer : producers) {
+            Thread t = new Thread(producer);
+            threads.add(t);
+            t.start();
+        }
+        for (Consumer consumer : consumers) {
+            Thread t = new Thread(consumer);
+            threads.add(t);
+            t.start();
+        }
+
+        // Wait for all threads to finish
+        for (Thread t : threads) {
+            try {
+                t.join();  // Waits for thread t to complete
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println("All threads have finished execution.");
+    }
+
+    private void createConsumers(ResourceType resourceType){
+
+        for (int c = 0; c < numberOfConsumers; c++) {
+            this.consumers.add(new Consumer(resourceType, this.consumerDelayMax, this.consumerDelayMin));
+        }
+    }
+
+    private void createProducers(ResourceType resourceType){
+
+        for (int p = 0; p < numberOfProducers; p++) {
+            this.producers.add(new Producer(resourceType, this.producerDelayMax, this.producerDelayMin));
+        }
+    }
+
 
     public int getStartDelayMin() {
         return startDelayMin;

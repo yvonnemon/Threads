@@ -14,10 +14,6 @@ public class ConfigPanel extends JPanel {
     public ConfigPanel() {
         setLayout(new BorderLayout());
 
-       /* // Table in the center
-        centerTable = new JTable(5, 2); // 5 rows, 2 columns*/
-
-
         tableModel = new DefaultTableModel(new Object[]{"Parameter", "Value"}, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -25,6 +21,7 @@ public class ConfigPanel extends JPanel {
                 return column == 1;
             }
         };
+
         tableModel.addRow(new Object[]{"Total Resources", 5});
         tableModel.addRow(new Object[]{"Max resources", 5});
         tableModel.addRow(new Object[]{"Min resources", 5});
@@ -82,7 +79,6 @@ public class ConfigPanel extends JPanel {
                 } else {
                     System.out.println("Invalid variable name: " + tableModel.getValueAt(row, 1).toString());
                 }
-            
         }
         return data;
     }
