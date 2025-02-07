@@ -40,13 +40,9 @@ public class Model {
         //THINK esto se podria meter a una lista de resources para verlo en el swing
         for (int i = 0; i < this.totalResources; i++) {
             ResourceType resourceType = new ResourceType();
-
-            //crear las listas de consumes y producers
+            resources.add(resourceType);
             createConsumers(resourceType);
             createProducers(resourceType);
-
-            resourceType.setConsumers(this.consumers);
-            resourceType.setProducers(this.producers);
 
             //THINK a lo mejor esto tendria que estar aqui, tbh lo pondria en el controller
             startTheKnitting();

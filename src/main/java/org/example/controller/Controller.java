@@ -15,10 +15,15 @@ public class Controller {
     private Model model;
     private MainFrame mainFrame;
 
+    public Controller() {
+        this.model = new Model();
+    }
+
     public void startSwing(){
         SwingUtilities.invokeLater(() -> {
             mainFrame = new MainFrame(model);
             mainFrame.setVisible(true);
+
         });
     }
 
@@ -28,6 +33,8 @@ public class Controller {
         this.model = x;
         System.out.println("hola");
         x.startButton();
+        mainFrame.revalidate();
+        mainFrame.repaint();
         mainFrame.startBackgroundUpdates(x);
     }
 
