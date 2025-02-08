@@ -12,18 +12,22 @@ import javax.swing.*;
 import java.util.ArrayList;
 
 public class Controller {
+    private static Controller instance;
     private Model model;
     private MainFrame mainFrame;
 
-    public Controller() {
-        this.model = new Model();
+    public static Controller getInstance() {
+        if (instance == null) {
+            instance = new Controller();
+        }
+        return instance;
     }
 
     public void startSwing(){
         SwingUtilities.invokeLater(() -> {
             mainFrame = new MainFrame(model);
             mainFrame.setVisible(true);
-
+            System.out.println("startSwing");
         });
     }
 
@@ -32,10 +36,13 @@ public class Controller {
         Model x = ConfigPanel.getConfigData(); //THINK es un array doble: [0-primer objeto][0-field name]
         this.model = x;
         System.out.println("hola");
+        //mainFrame.startBackgroundUpdates(x);
+
         x.startButton();
-        mainFrame.revalidate();
-        mainFrame.repaint();
-        mainFrame.startBackgroundUpdates(x);
+
+//        mainFrame.revalidate();
+//        mainFrame.repaint();
+
     }
 
     public static void stopButton(){
@@ -56,5 +63,9 @@ public class Controller {
 
     public void setModel(Model model) {
         this.model = model;
+    }
+
+    public MainFrame getMainFrame() {
+        return mainFrame;
     }
 }

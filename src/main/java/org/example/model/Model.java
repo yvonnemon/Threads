@@ -1,5 +1,6 @@
 package org.example.model;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +26,10 @@ public class Model {
     private List<Consumer> consumers = new ArrayList<>();
     private List<Producer> producers = new ArrayList<>();
     private List<ResourceType> resources = new ArrayList<>();
+
+    private List<Thread> threadConsumer = new ArrayList<>();
+    private List<Thread> threadProducers = new ArrayList<>();
+
 
 
     public Model() {
@@ -60,23 +65,18 @@ public class Model {
 
         for (Producer producer : producers) {
             Thread t = new Thread(producer);
+            threadProducers.add(t);
             threads.add(t);
             //TODO creo que aqui va el start delay, no en el run
             t.start();
         }
         for (Consumer consumer : consumers) {
             Thread t = new Thread(consumer);
+            threadConsumer.add(t);
             threads.add(t);
-            t.start();
-        }
 
-        // Wait for all threads to finish
-        for (Thread t : threads) {
-            try {
-                t.join();  // Waits for thread t to complete
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            t.start();
+
         }
 
         System.out.println("All threads have finished execution.");
@@ -183,5 +183,45 @@ public class Model {
 
     public void setNumberOfConsumers(int numberOfConsumers) {
         this.numberOfConsumers = numberOfConsumers;
+    }
+
+    public List<Thread> getThreadConsumer() {
+        return threadConsumer;
+    }
+
+    public void setThreadConsumer(List<Thread> threadConsumer) {
+        this.threadConsumer = threadConsumer;
+    }
+
+    public List<Thread> getThreadProducers() {
+        return threadProducers;
+    }
+
+    public void setThreadProducers(List<Thread> threadProducers) {
+        this.threadProducers = threadProducers;
+    }
+
+    public List<Consumer> getConsumers() {
+        return consumers;
+    }
+
+    public void setConsumers(List<Consumer> consumers) {
+        this.consumers = consumers;
+    }
+
+    public List<Producer> getProducers() {
+        return producers;
+    }
+
+    public void setProducers(List<Producer> producers) {
+        this.producers = producers;
+    }
+
+    public List<ResourceType> getResources() {
+        return resources;
+    }
+
+    public void setResources(List<ResourceType> resources) {
+        this.resources = resources;
     }
 }

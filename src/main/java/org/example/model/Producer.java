@@ -68,9 +68,9 @@ public class Producer implements Runnable {
             int delay = ThreadLocalRandom.current().nextInt(this.minDelay, this.maxDelay + 1);
             Thread.sleep(100L *delay);
             for (int i = 0; i < 1000; i++) {
-                //System.out.println(Thread.currentThread().getName() + " started, state: " + Thread.currentThread().getState());
+
                 Thread.sleep(1);  // This makes the thread enter TIMED_WAITING
-                //System.out.println(Thread.currentThread().getName() + " finished, state: " + Thread.currentThread().getState());
+
                 //status = Stauts.NEW;
                 produce();  // Calls ClassA.add()
 

@@ -1,5 +1,7 @@
 package org.example.model;
 
+import org.example.controller.Controller;
+
 import java.util.List;
 import java.util.List;
 
@@ -26,7 +28,7 @@ public class ResourceType {
 
         //}
         quantity--;
-        System.out.println(quantity + "Thread ID in remove: " + Thread.currentThread().threadId());
+       System.out.println(quantity + "Thread ID in remove: " + Thread.currentThread().threadId());
     }
 
 

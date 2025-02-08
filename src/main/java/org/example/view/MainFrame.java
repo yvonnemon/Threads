@@ -33,45 +33,70 @@ public class MainFrame extends JFrame {
         //startBackgroundUpdates(model);
     }
 
-    public void startBackgroundUpdates(Model model) {
-        new SwingWorker<Void, Void>() {
-            @Override
-            protected Void doInBackground() {
-                Random random = new Random();
+//    public void startBackgroundUpdates(Model model) {
+//        new SwingWorker<Void, Void>() {
+//            @Override
+//            protected Void doInBackground() {
+//                Random random = new Random();
+//                while (true) {
+//                    //System.out.println("Starting background updates");
+//                    try {
+//                        Thread.sleep(1000); // Update every 2 seconds
+//
+//                        // 🟢 Generate Random Data for Testing
+//                        Object[][] data1 = {
+//                                {"model.get", random.nextInt(100), "✓"},
+//                                {"Item B", random.nextInt(100), "✓"}
+//                        };
+//
+//                        Object[][] data2 = new Object[2][3];
+//                        for (int i = 0; i < data2.length; i++) {
+//                            data2[i][0] = model.getThreadConsumer().get(i).threadId();
+//                            data2[i][1] = model.getConsumers().get(i).getResourceType().getQuantity();
+//                            data2[i][2] = model.getConsumers().get(i).getMinDelay();
+//                        }
+//
+//
+//                        Object[][] data3 = {
+//                                {"Task 1", random.nextInt(10), "Pending"},
+//                                {"Task 2", random.nextInt(10), "Completed"}
+//                        };
+//
+//                        //  Update Tables in RightPanel (Thread-Safe)
+//                        SwingUtilities.invokeLater(() -> {
+//                            dataPanel.updatePanel1(data1);
+//                            dataPanel.updatePanel2(data2);
+//                            dataPanel.updatePanel3(data3);
+//                        });
+//
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//        }.execute();
+//    }
 
-                while (true) {
-                    try {
-                        Thread.sleep(1000); // Update every 2 seconds
+    public void jajxd(Model model) {
 
-                        // 🟢 Generate Random Data for Testing
-                        Object[][] data1 = {
-                                {"Item A", random.nextInt(100), "✓"},
-                                {"Item B", random.nextInt(100), "✓"}
-                        };
 
-                        Object[][] data2 = {
-                                {"Process X", random.nextInt(50), "Running"},
-                                {"Process Y", random.nextInt(50), "Stopped"}
-                        };
+        //System.out.println("Starting background updates");
+        Object[][] data2 = new Object[2][3];
+        for (int i = 0; i < data2.length; i++) {
+            data2[i][0] = model.getThreadConsumer().get(i).threadId();
+            data2[i][1] = model.getConsumers().get(i).getResourceType().getQuantity();
+            data2[i][2] = model.getConsumers().get(i).getMinDelay();
+        }
+//                        Object[][] data3 = {
+//                                {"Task 1", 3, "Pending"},
+//                                {"Task 2", 3, "Completed"}
+//                        };
+        //  Update Tables in RightPanel (Thread-Safe)
 
-                        Object[][] data3 = {
-                                {"Task 1", random.nextInt(10), "Pending"},
-                                {"Task 2", random.nextInt(10), "Completed"}
-                        };
+        //dataPanel.updatePanel1(data1);
+        dataPanel.updatePanel2(data2);
 
-                        // 🟢 Update Tables in RightPanel (Thread-Safe)
-                        SwingUtilities.invokeLater(() -> {
-                            dataPanel.updatePanel1(data1);
-                            dataPanel.updatePanel2(data2);
-                            dataPanel.updatePanel3(data3);
-                        });
-
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }.execute();
+        //dataPanel.updatePanel3(data3);
     }
 
     // Getter for the static instance

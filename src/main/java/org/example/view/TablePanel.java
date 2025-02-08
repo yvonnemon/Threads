@@ -40,6 +40,7 @@ public class TablePanel extends JPanel {
         SwingUtilities.invokeLater(() -> {
             tableModel.setRowCount(0); // Clear table before updating
             for (Object[] row : newData) {
+
                 tableModel.addRow(row);
             }
         });

@@ -9,13 +9,6 @@ import java.awt.event.ActionListener;
 public class ButtonPlay extends JButton {
     public ButtonPlay() {
         setText("Play");
-        addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //buttonStart();
-                Controller c = new Controller();
-                c.startButton();
-            }
-        });
+        addActionListener(e -> Controller.getInstance().startButton());
     }
 }

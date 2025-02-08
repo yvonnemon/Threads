@@ -22,17 +22,17 @@ public class ConfigPanel extends JPanel {
             }
         };
 
-        tableModel.addRow(new Object[]{"Total Resources", 5});
-        tableModel.addRow(new Object[]{"Max resources", 5});
-        tableModel.addRow(new Object[]{"Min resources", 5});
-        tableModel.addRow(new Object[]{"Number of producers", 5});
-        tableModel.addRow(new Object[]{"Number of consumers", 5});
-        tableModel.addRow(new Object[]{"Start Delay Min", 5});
-        tableModel.addRow(new Object[]{"Start Delay Max", 5});
-        tableModel.addRow(new Object[]{"Producer Delay Min", 5});
-        tableModel.addRow(new Object[]{"Producer Delay Max", 5});
-        tableModel.addRow(new Object[]{"Consumer Delay Min", 5});
-        tableModel.addRow(new Object[]{"Consumer Delay Max", 5});
+        tableModel.addRow(new Object[]{"Total Resources", 2});
+        tableModel.addRow(new Object[]{"Max resources", 2});
+        tableModel.addRow(new Object[]{"Min resources", 2});
+        tableModel.addRow(new Object[]{"Number of producers", 2});
+        tableModel.addRow(new Object[]{"Number of consumers", 2});
+        tableModel.addRow(new Object[]{"Start Delay Min", 2});
+        tableModel.addRow(new Object[]{"Start Delay Max", 2});
+        tableModel.addRow(new Object[]{"Producer Delay Min", 2});
+        tableModel.addRow(new Object[]{"Producer Delay Max", 2});
+        tableModel.addRow(new Object[]{"Consumer Delay Min", 2});
+        tableModel.addRow(new Object[]{"Consumer Delay Max", 2});
 
         centerTable = new JTable(tableModel);
 

@@ -1,5 +1,7 @@
 package org.example.model;
 
+import org.example.controller.Controller;
+
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Consumer implements Runnable {
@@ -72,6 +74,8 @@ public class Consumer implements Runnable {
                 //System.out.println(Thread.currentThread().getName() + " finished, state: " + Thread.currentThread().getState());
                 //status = Stauts.NEW;
                 consume();  // Calls ClassA.add()
+                Controller.getInstance().getMainFrame()
+                        .jajxd(Controller.getInstance().getModel());
 
             }
         } catch (InterruptedException e) {
@@ -79,4 +83,6 @@ public class Consumer implements Runnable {
             System.out.println("INTERRUPTEDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
         }
     }
+
+
 }
