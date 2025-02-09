@@ -31,7 +31,7 @@ public class Controller {
         });
     }
 
-    public void startButton(){
+    public void startButton() throws InterruptedException {
         //TODO get data
         Model x = ConfigPanel.getConfigData(); //THINK es un array doble: [0-primer objeto][0-field name]
         this.model = x;

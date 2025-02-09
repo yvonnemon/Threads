@@ -9,6 +9,7 @@ public class ResourceType {
     private int quantity = 0;
     private Integer minQuantity;
     private Integer maxQuantity;
+    private int id;
     //THINK entonces tiene una lista de consumers y producers
     private List<Producer> producers;
     private List<Consumer> consumers;
@@ -19,7 +20,7 @@ public class ResourceType {
 
        // }
         quantity++;
-        System.out.println(quantity + "Thread ID in add: " + Thread.currentThread().threadId());
+        //System.out.println(quantity + "Thread ID in add: " + Thread.currentThread().threadId());
     }
 
     public synchronized void removeResource(){
@@ -28,7 +29,7 @@ public class ResourceType {
 
         //}
         quantity--;
-       System.out.println(quantity + "Thread ID in remove: " + Thread.currentThread().threadId());
+      // System.out.println(quantity + "Thread ID in remove: " + Thread.currentThread().threadId());
     }
 
 
@@ -72,4 +73,18 @@ public class ResourceType {
         this.consumers = consumers;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "ResourceType{" +
+                "id=" + id +
+                '}';
+    }
 }

@@ -9,6 +9,12 @@ import java.awt.event.ActionListener;
 public class ButtonPlay extends JButton {
     public ButtonPlay() {
         setText("Play");
-        addActionListener(e -> Controller.getInstance().startButton());
+        addActionListener(e -> {
+            try {
+                Controller.getInstance().startButton();
+            } catch (InterruptedException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
     }
 }

@@ -2,6 +2,7 @@ package org.example.model;
 
 import org.example.controller.Controller;
 
+import javax.swing.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Consumer implements Runnable {
@@ -9,13 +10,15 @@ public class Consumer implements Runnable {
     private Integer startTime;
     private Integer maxDelay;
     private Integer minDelay;
+    private int id;
 
     private ResourceType resourceType;
 
-    public Consumer(ResourceType resourceType, int maxDelay, int minDelay) {
+    public Consumer(ResourceType resourceType, int maxDelay, int minDelay, int id) {
         this.resourceType = resourceType;
         this.maxDelay = maxDelay;
         this.minDelay = minDelay;
+        this.id = id;
     }
 
     public void consume() {
@@ -62,25 +65,31 @@ public class Consumer implements Runnable {
         this.resourceType = resourceType;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public void run() {
         //THINK porque esta cosa era un loop infinito quje solo se tenia que parar con el boton de stop
         try {
             int delay = ThreadLocalRandom.current().nextInt(this.minDelay, this.maxDelay + 1);
-            Thread.sleep(100L *delay);
+            Thread.sleep(1000L *delay);
             for (int i = 0; i < 1000; i++) {
                 //System.out.println(Thread.currentThread().getName() + " started, state: " + Thread.currentThread().getState());
                 Thread.sleep(1);  // This makes the thread enter TIMED_WAITING
-                //System.out.println(Thread.currentThread().getName() + " finished, state: " + Thread.currentThread().getState());
-                //status = Stauts.NEW;
                 consume();  // Calls ClassA.add()
-                Controller.getInstance().getMainFrame()
-                        .jajxd(Controller.getInstance().getModel());
-
+                SwingUtilities.invokeLater(() -> {
+                    Controller.getInstance().getMainFrame()
+                            .updateTable(Controller.getInstance().getModel());
+                });
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
-            System.out.println("INTERRUPTEDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
         }
     }
 
