@@ -77,17 +77,12 @@ public class Consumer implements Runnable {
     public void run() {
         //THINK porque esta cosa era un loop infinito quje solo se tenia que parar con el boton de stop
         try {
-            int delay = ThreadLocalRandom.current().nextInt(this.minDelay, this.maxDelay + 1);
-            Thread.sleep(1000L *delay);
-            for (int i = 0; i < 1000; i++) {
-                //System.out.println(Thread.currentThread().getName() + " started, state: " + Thread.currentThread().getState());
+//            int delay = ThreadLocalRandom.current().nextInt(this.minDelay, this.maxDelay + 1);
+//            Thread.sleep(100L *delay);
+           // for (int i = 0; i < 1000; i++) {
                 Thread.sleep(1);  // This makes the thread enter TIMED_WAITING
                 consume();  // Calls ClassA.add()
-                SwingUtilities.invokeLater(() -> {
-                    Controller.getInstance().getMainFrame()
-                            .updateTable(Controller.getInstance().getModel());
-                });
-            }
+           // }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

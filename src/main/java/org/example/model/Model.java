@@ -3,6 +3,7 @@ package org.example.model;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Model {
@@ -43,17 +44,30 @@ public class Model {
         //THINK este bucle esta mal
         System.out.println("button play clicked");
          //segun la config se pueden crear mas etc
-        //THINK esto se podria meter a una lista de resources para verlo en el swing
+        Random random = new Random();
+//        int randomResources = random.nextInt(maxResources - minResources + 1);
+//        totalResources = randomResources;
         for (int i = 0; i < this.totalResources; i++) {
             ResourceType resourceType = new ResourceType();
             resourceType.setId(i);
             resources.add(resourceType);
-            createConsumers(resourceType);
-            createProducers(resourceType);
+            System.out.println("creando "+random+" resources");
+//            createConsumers(resourceType);
+//            createProducers(resourceType);
 
-            //THINK a lo mejor esto tendria que estar aqui, tbh lo pondria en el controller
-            startTheKnitting();
         }
+
+        for (int i = 0; i < resources.size(); i++) {
+            Random random2 = new Random();
+
+            int randomIndex = random2.nextInt(resources.size());
+            System.out.println("asignando resources  "+randomIndex);
+            createConsumers(resources.get(randomIndex));
+            createProducers(resources.get(randomIndex));
+        }
+
+        startTheKnitting();
+
         System.out.println("Producers: " + producers.size());
         System.out.println("Consumers: " + consumers.size());
         System.out.println("Active threads: " + Thread.activeCount());
@@ -63,36 +77,36 @@ public class Model {
 
         //THINK a ver, crear una lista de resources, #? user input -> por cada recurso, crear producer/consumer, #? user input
 
-        for (int i = 0; i < numberOfProducers; i++) {
+        for (int i = 0; i < producers.size(); i++) {
+            System.out.println("creando threads producer");
+            int delay = ThreadLocalRandom.current().nextInt(startDelayMin, startDelayMax + 1);
             Thread t = new Thread(producers.get(i));
             threadProducers.add(t);
-            //threads.add(t);
-
-
+            Thread.sleep(delay* 10L);
             t.start();
         }
 
-        for (int i = 0; i < numberOfConsumers; i++) {
+        for (int i = 0; i < consumers.size(); i++) {
+            System.out.println("creando threads consumer");
+            int delay = ThreadLocalRandom.current().nextInt(startDelayMin, startDelayMax + 1);
             Thread t = new Thread(consumers.get(i));
             threadConsumer.add(t);
-            //threads.add(t);
-
-            //TODO creo que aqui va el start delay, no en el run
+            Thread.sleep(delay* 10L);
+            //TODO creo que aqui va el start delay, no en el run en teoria
             t.start();
         }
-
         System.out.println("All threads have finished creation.");
     }
 
     private void createConsumers(ResourceType resourceType){
-
+        System.out.println("creado consumers");
         for (int c = 0; c < numberOfConsumers; c++) {
             this.consumers.add(new Consumer(resourceType, this.consumerDelayMax, this.consumerDelayMin, c));
         }
     }
 
     private void createProducers(ResourceType resourceType){
-
+        System.out.println("creado producers");
         for (int p = 0; p < numberOfProducers; p++) {
             this.producers.add(new Producer(resourceType, this.producerDelayMax, this.producerDelayMin, p));
         }

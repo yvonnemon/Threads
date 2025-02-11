@@ -37,6 +37,8 @@ public class Controller {
         this.model = x;
         System.out.println("hola");
         //mainFrame.startBackgroundUpdates(x);
+        Thread main = new Thread(mainFrame);
+        main.start();
 
         x.startButton();
 
