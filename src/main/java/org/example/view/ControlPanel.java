@@ -6,7 +6,8 @@ import java.awt.*;
 public class ControlPanel extends JPanel {
     public ControlPanel() {
         setLayout(new BorderLayout());
-        setPreferredSize(new Dimension(200, 0)); // Fixed width for the left panel
+        //setPreferredSize(new Dimension(150, 0));
+         // Fixed width for the left panel
 
         // Table for left panel
         JTable leftTable = new JTable(7, 2); // 7 rows, 2 columns

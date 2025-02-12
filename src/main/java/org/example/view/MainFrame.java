@@ -15,15 +15,15 @@ public class MainFrame extends JFrame implements Runnable {
     public MainFrame(Model model) {
         setTitle("ThreadLab");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1000, 600);
+        setSize(1200, 800);
         setLocationRelativeTo(null); // Center on screen
 
         setLayout(new BorderLayout());
 
         // Add all panels
         //add(new TitlePanel(), BorderLayout.NORTH); // Title at the top
-        add(new ControlPanel(), BorderLayout.WEST);  // Left panel
-        add(new ConfigPanel(), BorderLayout.CENTER); // Center panel
+        add(new ControlPanel(), BorderLayout.CENTER);  // Left panel
+        add(new ConfigPanel(), BorderLayout.WEST); // Center panel
 
         dataPanel = new DataPanel();
         add(new DataPanel(), BorderLayout.EAST); // Right panel

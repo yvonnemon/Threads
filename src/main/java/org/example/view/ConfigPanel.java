@@ -13,6 +13,7 @@ public class ConfigPanel extends JPanel {
 
     public ConfigPanel() {
         setLayout(new BorderLayout());
+        setPreferredSize(new Dimension(300, 0));
 
         tableModel = new DefaultTableModel(new Object[]{"Parameter", "Value"}, 0) {
             @Override

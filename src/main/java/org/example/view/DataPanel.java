@@ -11,7 +11,7 @@ public class DataPanel extends JPanel {
 
     public DataPanel() {
         setLayout(new GridLayout(3, 1, 5, 5)); // 3 rows in a vertical grid
-        setPreferredSize(new Dimension(500, 0)); // Fixed width
+        setPreferredSize(new Dimension(600, 0)); // Fixed width
 
         // Create table panels with appropriate titles
         resourcesTable = new TablePanel("Resources", new DefaultTableModel(new Object[]{"Resource ID", "Quantity", "Min Quantity", "Max Quantity", "Consumers #", "Producers #"}, 0));
