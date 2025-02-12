@@ -3,24 +3,28 @@ package org.example.model;
 import org.example.controller.Controller;
 
 import javax.swing.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Consumer implements Runnable {
     private volatile boolean shouldStop = false;
 
     private Stauts status;
-    private Integer startTime;
+    private LocalDateTime startTime;
     private Integer maxDelay;
     private Integer minDelay;
     private int id;
 
     private ResourceType resourceType;
 
-    public Consumer(ResourceType resourceType, int maxDelay, int minDelay, int id) {
+    public Consumer(ResourceType resourceType, int maxDelay, int minDelay, int id, Stauts status) {
         this.resourceType = resourceType;
         this.maxDelay = maxDelay;
         this.minDelay = minDelay;
         this.id = id;
+        this.status = status;
+        this.startTime = LocalDateTime.now();
     }
 
     public void consume() {
@@ -35,11 +39,11 @@ public class Consumer implements Runnable {
         this.status = status;
     }
 
-    public Integer getStartTime() {
+    public LocalDateTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Integer startTime) {
+    public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
 
@@ -75,6 +79,13 @@ public class Consumer implements Runnable {
         this.id = id;
     }
 
+    @Override
+    public String toString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+
+        return startTime.format(formatter);
+    }
+
     public void stop() {
         shouldStop = true;
     }
@@ -84,6 +95,7 @@ public class Consumer implements Runnable {
         //while (!shouldStop) {
             try {
                 for (int i = 0; i < 1000; i++) {
+                    this.setStatus(Stauts.RUNNABLE);
                     if (shouldStop) {
                         break;
                     }

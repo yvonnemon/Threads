@@ -33,7 +33,6 @@ public class Model {
     private List<Thread> threadProducers = new ArrayList<>();
 
 
-
     public Model() {
     }
 
@@ -43,15 +42,15 @@ public class Model {
 
         //THINK este bucle esta mal
         System.out.println("button play clicked");
-         //segun la config se pueden crear mas etc
+        //segun la config se pueden crear mas etc
         Random random = new Random();
-//        int randomResources = random.nextInt(maxResources - minResources + 1);
-//        totalResources = randomResources;
-        for (int i = 0; i < this.totalResources; i++) {
+        int randomResources = random.nextInt(maxResources - minResources + 2);
+        totalResources = randomResources;
+        for (int i = 0; i < randomResources; i++) {
             ResourceType resourceType = new ResourceType();
             resourceType.setId(i);
             resources.add(resourceType);
-            System.out.println("creando "+random+" resources");
+            System.out.println("creando " + random + " resources");
 //            createConsumers(resourceType);
 //            createProducers(resourceType);
 
@@ -59,9 +58,8 @@ public class Model {
 
         for (int i = 0; i < resources.size(); i++) {
             Random random2 = new Random();
-
             int randomIndex = random2.nextInt(resources.size());
-            System.out.println("asignando resources  "+randomIndex);
+            System.out.println("asignando resources  " + randomIndex);
             createConsumers(resources.get(randomIndex));
             createProducers(resources.get(randomIndex));
         }
@@ -76,23 +74,24 @@ public class Model {
     private void startTheKnitting() throws InterruptedException {
 
         // crear una lista de resources, #? user input -> por cada recurso, crear producer/consumer, #? user input
+
+        // Create producer threads
+        for (Producer producer : producers) {
+            System.out.println("Creating producer threads");
+            Thread t = new Thread(producer);
+            threadProducers.add(t);
+        }
+
+        // Create consumer threads
+        for (Consumer consumer : consumers) {
+            System.out.println("Creating consumer threads");
+            Thread t = new Thread(consumer);
+            threadConsumer.add(t);
+        }
+
         SwingWorker<Void, Void> worker = new SwingWorker<>() {
             @Override
             protected Void doInBackground() {
-                // Create producer threads
-                for (Producer producer : producers) {
-                    System.out.println("Creating producer threads");
-                    Thread t = new Thread(producer);
-                    threadProducers.add(t);
-                }
-
-                // Create consumer threads
-                for (Consumer consumer : consumers) {
-                    System.out.println("Creating consumer threads");
-                    Thread t = new Thread(consumer);
-                    threadConsumer.add(t);
-                }
-
                 // Start producer threads with delay
                 for (Thread thread : threadProducers) {
                     try {
@@ -103,6 +102,19 @@ public class Model {
                     } catch (InterruptedException ignored) {
                     }
                 }
+                System.out.println("All threads have finished creation.");
+                return null;
+            }
+
+            @Override
+            protected void done() {
+                System.out.println("SwingWorker finished!");
+
+            }
+        };
+        SwingWorker<Void, Void> worker2 = new SwingWorker<>() {
+            @Override
+            protected Void doInBackground() {
 
                 // Start consumer threads with delay
                 for (Thread thread : threadConsumer) {
@@ -114,26 +126,32 @@ public class Model {
                     } catch (InterruptedException ignored) {
                     }
                 }
-
                 System.out.println("All threads have finished creation.");
                 return null;
             }
+            @Override
+            protected void done() {
+                System.out.println("SwingWorker finished!");
+            //TODO
+            }
+
         };
 
-        worker.execute(); // Runs in a background thread
+        worker.execute();
+        worker2.execute();// Runs in a background thread
     }
 
-    private void createConsumers(ResourceType resourceType){
+    private void createConsumers(ResourceType resourceType) {
         System.out.println("creado consumers");
         for (int c = 0; c < numberOfConsumers; c++) {
-            this.consumers.add(new Consumer(resourceType, this.consumerDelayMax, this.consumerDelayMin, c));
+            this.consumers.add(new Consumer(resourceType, this.consumerDelayMax, this.consumerDelayMin, c, Stauts.NEW));
         }
     }
 
-    private void createProducers(ResourceType resourceType){
+    private void createProducers(ResourceType resourceType) {
         System.out.println("creado producers");
         for (int p = 0; p < numberOfProducers; p++) {
-            this.producers.add(new Producer(resourceType, this.producerDelayMax, this.producerDelayMin, p));
+            this.producers.add(new Producer(resourceType, this.producerDelayMax, this.producerDelayMin, p, Stauts.NEW));
         }
     }
 
@@ -142,11 +160,13 @@ public class Model {
 
         // Stop all producers
         for (Producer producer : producers) {
+            producer.setStatus(Stauts.TERMINATED);
             producer.stop();  // Set the stop flag
         }
 
         // Stop all consumers
         for (Consumer consumer : consumers) {
+            consumer.setStatus(Stauts.TERMINATED);
             consumer.stop();
         }
 
@@ -154,13 +174,15 @@ public class Model {
         for (Thread thread : threadProducers) {
             try {
                 thread.join();  // Wait for thread to terminate
-            } catch (InterruptedException ignored) {}
+            } catch (InterruptedException ignored) {
+            }
         }
 
         for (Thread thread : threadConsumer) {
             try {
                 thread.join();
-            } catch (InterruptedException ignored) {}
+            } catch (InterruptedException ignored) {
+            }
         }
 
         System.out.println("All threads have been stopped.");

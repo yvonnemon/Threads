@@ -1,25 +1,27 @@
 package org.example.model;
 
-import org.example.controller.Controller;
 
-import javax.swing.*;
-import java.util.concurrent.ThreadLocalRandom;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Producer implements Runnable {
     private volatile boolean shouldStop = false;
     private Stauts status;
-    private Integer startTime; //TODO un print de time stamp
+    private LocalDateTime startTime; //TODO un print de time stamp
     private int id;
     private Integer maxDelay;
     private Integer minDelay;
 
     private ResourceType resourceType;
 
-    public Producer(ResourceType resourceType, int maxDelay, int minDelay, int id) {
+    public Producer(ResourceType resourceType, int maxDelay, int minDelay, int id, Stauts status) {
         this.resourceType = resourceType;
         this.maxDelay = maxDelay;
         this.minDelay = minDelay;
         this.id = id;
+        this.status = status;
+        this.startTime = LocalDateTime.now();
     }
 
     public void produce() {
@@ -34,11 +36,11 @@ public class Producer implements Runnable {
         this.status = status;
     }
 
-    public Integer getStartTime() {
+    public LocalDateTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Integer startTime) {
+    public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
 
@@ -74,6 +76,13 @@ public class Producer implements Runnable {
         this.id = id;
     }
 
+    @Override
+    public String toString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+
+        return startTime.format(formatter);
+    }
+
     public void stop() {
         shouldStop = true;
     }
@@ -83,6 +92,7 @@ public class Producer implements Runnable {
         //while (!shouldStop) {
             try {
                 for (int i = 0; i < 1000; i++) {
+                    this.setStatus(Stauts.RUNNABLE);
                 if (shouldStop) {
                     break;
                 }

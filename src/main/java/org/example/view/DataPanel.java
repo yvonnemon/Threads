@@ -15,8 +15,8 @@ public class DataPanel extends JPanel {
 
         // Create table panels with appropriate titles
         resourcesTable = new TablePanel("Resources", new DefaultTableModel(new Object[]{"Resource ID", "Quantity", "Min Quantity", "Max Quantity", "Consumers #", "Producers #"}, 0));
-        consumersTable = new TablePanel("Consumers", new DefaultTableModel(new Object[]{"Consumer ID", "Thread ID", "Belongs to", "Start Delay", "Consume Delay"}, 0));
-        producersTable = new TablePanel("Producers", new DefaultTableModel(new Object[]{"Producer ID", "Thread ID", "Belongs to", "Start Delay", "Produce Delay"}, 0));
+        consumersTable = new TablePanel("Consumers", new DefaultTableModel(new Object[]{"Consumer ID", "Thread ID", "Belongs to", "Start Delay", "Consume Delay", "Status", "Start time"}, 0));
+        producersTable = new TablePanel("Producers", new DefaultTableModel(new Object[]{"Producer ID", "Thread ID", "Belongs to", "Start Delay", "Produce Delay", "Status", "Start time"}, 0));
 
         // Add the panels to the layout
         add(resourcesTable);

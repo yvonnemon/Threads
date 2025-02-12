@@ -47,23 +47,27 @@ public class MainFrame extends JFrame implements Runnable {
                 tableResources[i][5] = model.getNumberOfProducers();
             }
 
-            Object[][] tableProducers = new Object[model.getThreadProducers().size()][5];
+            Object[][] tableProducers = new Object[model.getThreadProducers().size()][7];
             for (int i = 0; i < tableProducers.length; i++) {
                 tableProducers[i][0] = model.getProducers().get(i).getId();
                 tableProducers[i][1] = model.getThreadProducers().get(i).threadId();
                 tableProducers[i][2] = model.getProducers().get(i).getResourceType().getId();
                 tableProducers[i][3] = model.getProducers().get(i).getMinDelay();
-                tableProducers[i][4] = model.getProducers().get(i).getMinDelay();
+                tableProducers[i][4] = model.getProducers().get(i).getMaxDelay();
+                tableProducers[i][5] = model.getProducers().get(i).getStatus();
+                tableProducers[i][6] = model.getProducers().get(i).toString();
             }
 
             //System.out.println("Starting background updates");
-            Object[][] tableConsumers = new Object[model.getThreadConsumer().size()][5];
+            Object[][] tableConsumers = new Object[model.getThreadConsumer().size()][7];
             for (int i = 0; i < tableConsumers.length; i++) {
                 tableConsumers[i][0] = model.getConsumers().get(i).getId();
                 tableConsumers[i][1] = model.getThreadConsumer().get(i).threadId();
                 tableConsumers[i][2] = model.getConsumers().get(i).getResourceType().getId();
                 tableConsumers[i][3] = model.getConsumers().get(i).getMinDelay();
-                tableConsumers[i][4] = model.getConsumers().get(i).getMinDelay();
+                tableConsumers[i][4] = model.getConsumers().get(i).getMaxDelay();
+                tableConsumers[i][5] = model.getConsumers().get(i).getStatus();
+                tableConsumers[i][6] = model.getConsumers().get(i).toString();
             }
 
             dataPanel.updatePanel1(tableResources);
@@ -85,35 +89,6 @@ public class MainFrame extends JFrame implements Runnable {
         return configPanel;
     }
 
-//    @Override
-//    public void run() {
-//        // Ensure that the timer is created and started on the EDT.
-//        SwingUtilities.invokeLater(new Runnable() {
-//            @Override
-//            public void run() {
-//                // Create a Swing Timer that fires every 100 milliseconds.
-//                javax.swing.Timer timer = new javax.swing.Timer(100, new ActionListener() {
-//                    @Override
-//                    public void actionPerformed(ActionEvent e) {
-//                        // Update the table with the latest Model data.
-//                        updateTable(Controller.getInstance().getModel());
-//                    }
-//                });
-//                timer.start(); // Start the timer
-//            }
-//        });
-//
-//        // Optionally, if you need the thread to stay alive,
-//        // you could have the run() method wait indefinitely or until interrupted.
-//        // For example:
-//        try {
-//            // Wait indefinitely; the timer will keep firing on the EDT.
-//            Thread.sleep(Long.MAX_VALUE);
-//        } catch (InterruptedException e) {
-//            // Handle interruption if needed.
-//        }
-//    }
-
     @Override
     public void run() {
         //TODO updatea la tabla
@@ -128,8 +103,6 @@ public class MainFrame extends JFrame implements Runnable {
                 SwingUtilities.invokeLater(() -> {
                     updateTable(Controller.getInstance().getModel());
                 });
-
-
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
