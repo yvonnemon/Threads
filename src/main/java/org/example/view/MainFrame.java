@@ -5,6 +5,8 @@ import org.example.model.Model;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class MainFrame extends JFrame implements Runnable {
 
@@ -29,8 +31,6 @@ public class MainFrame extends JFrame implements Runnable {
         add(new DataPanel(), BorderLayout.EAST); // Right panel
         add(dataPanel, BorderLayout.EAST);
 
-        //TODO
-        //startBackgroundUpdates(model);
     }
 
 
@@ -85,6 +85,35 @@ public class MainFrame extends JFrame implements Runnable {
         return configPanel;
     }
 
+//    @Override
+//    public void run() {
+//        // Ensure that the timer is created and started on the EDT.
+//        SwingUtilities.invokeLater(new Runnable() {
+//            @Override
+//            public void run() {
+//                // Create a Swing Timer that fires every 100 milliseconds.
+//                javax.swing.Timer timer = new javax.swing.Timer(100, new ActionListener() {
+//                    @Override
+//                    public void actionPerformed(ActionEvent e) {
+//                        // Update the table with the latest Model data.
+//                        updateTable(Controller.getInstance().getModel());
+//                    }
+//                });
+//                timer.start(); // Start the timer
+//            }
+//        });
+//
+//        // Optionally, if you need the thread to stay alive,
+//        // you could have the run() method wait indefinitely or until interrupted.
+//        // For example:
+//        try {
+//            // Wait indefinitely; the timer will keep firing on the EDT.
+//            Thread.sleep(Long.MAX_VALUE);
+//        } catch (InterruptedException e) {
+//            // Handle interruption if needed.
+//        }
+//    }
+
     @Override
     public void run() {
         //TODO updatea la tabla
@@ -106,4 +135,5 @@ public class MainFrame extends JFrame implements Runnable {
             }
         }
     }
+
 }

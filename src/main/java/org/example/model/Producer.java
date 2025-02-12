@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Producer implements Runnable {
+    private volatile boolean shouldStop = false;
     private Stauts status;
     private Integer startTime; //TODO un print de time stamp
     private int id;
@@ -73,19 +74,26 @@ public class Producer implements Runnable {
         this.id = id;
     }
 
+    public void stop() {
+        shouldStop = true;
+    }
+
     @Override
     public void run() {
-        //TODO cada producer/consumer repite su accion x veces
-        try {
-//            int delay = ThreadLocalRandom.current().nextInt(this.minDelay, this.maxDelay + 1);
-//            Thread.sleep(100L *delay);
-           // for (int i = 0; i < 1000; i++) {
-
+        //while (!shouldStop) {
+            try {
+                for (int i = 0; i < 1000; i++) {
+                if (shouldStop) {
+                    break;
+                }
                 Thread.sleep(1);  // This makes the thread enter TIMED_WAITING
                 produce();  // Calls ClassA.add()
-            //}
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+                }
+                //break;
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        //}
     }
 }

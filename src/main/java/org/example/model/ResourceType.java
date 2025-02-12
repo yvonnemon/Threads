@@ -83,8 +83,7 @@ public class ResourceType {
 
     @Override
     public String toString() {
-        return "ResourceType{" +
-                "id=" + id +
-                '}';
+        return "RType " +
+                "id=" + id;
     }
 }

@@ -47,8 +47,8 @@ public class Controller {
 
     }
 
-    public static void stopButton(){
-        //TODO todo
+    public void stopButton(){
+        model.stopAllThreads();
     }
 
     public static void randomButton(){
