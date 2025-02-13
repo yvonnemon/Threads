@@ -19,8 +19,6 @@ public class ControlPanel extends JPanel {
         buttonPanel.setPreferredSize(new Dimension(200, 100)); // Fixed height
         buttonPanel.add(new ButtonPlay());
         buttonPanel.add(new ButtonStop());
-        buttonPanel.add(new ButtonConfig());
-        buttonPanel.add(new JButton("Button 4"));
         add(buttonPanel, BorderLayout.SOUTH);
     }
 }

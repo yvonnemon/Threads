@@ -1,8 +1,5 @@
 package org.example.model;
 
-import org.example.controller.Controller;
-
-import java.util.List;
 import java.util.List;
 
 public class ResourceType {
@@ -10,26 +7,16 @@ public class ResourceType {
     private Integer minQuantity;
     private Integer maxQuantity;
     private int id;
-    //THINK entonces tiene una lista de consumers y producers
+
     private List<Producer> producers;
     private List<Consumer> consumers;
 
     public synchronized void addResource(){
-       //System.out.println("addResource quantity++" + quantity);
-        //if(Thread.currentThread().threadId() ==40){
-
-       // }
         quantity++;
-        //System.out.println(quantity + "Thread ID in add: " + Thread.currentThread().threadId());
     }
 
     public synchronized void removeResource(){
-       //System.out.println("removeResource quantity--" + quantity);
-        //if(Thread.currentThread().threadId() ==40){
-
-        //}
         quantity--;
-      // System.out.println(quantity + "Thread ID in remove: " + Thread.currentThread().threadId());
     }
 
 

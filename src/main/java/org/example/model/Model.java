@@ -10,8 +10,8 @@ public class Model {
 
     private int totalResources;
 
-    private int maxResources;
-    private int minResources;
+    private int maxQuantity;
+    private int minQuantity;
 
     private int numberOfProducers;
     private int numberOfConsumers;
@@ -40,20 +40,22 @@ public class Model {
         //for i en total > crear resources; for i en resources > crear produces/consumers
         //pero el total es un random entre el max y min
 
-        //THINK este bucle esta mal
         System.out.println("button play clicked");
         //segun la config se pueden crear mas etc
         Random random = new Random();
-        int randomResources = random.nextInt(maxResources - minResources + 2);
-        totalResources = randomResources;
+        //int randomResources = random.nextInt(maxResources - minResources + 2);
+
+        int randomResources = random.nextInt(10) + 1;
+
+        this.totalResources = randomResources;
         for (int i = 0; i < randomResources; i++) {
             ResourceType resourceType = new ResourceType();
+            int quantity = random.nextInt(maxQuantity - minQuantity + 2);
+            resourceType.setMaxQuantity(maxQuantity);
+            resourceType.setMinQuantity(minQuantity);
             resourceType.setId(i);
             resources.add(resourceType);
             System.out.println("creando " + random + " resources");
-//            createConsumers(resourceType);
-//            createProducers(resourceType);
-
         }
 
         for (int i = 0; i < resources.size(); i++) {
@@ -245,20 +247,20 @@ public class Model {
         this.totalResources = totalResources;
     }
 
-    public int getMaxResources() {
-        return maxResources;
+    public int getMaxQuantity() {
+        return maxQuantity;
     }
 
-    public void setMaxResources(int maxResources) {
-        this.maxResources = maxResources;
+    public void setMaxQuantity(int maxQuantity) {
+        this.maxQuantity = maxQuantity;
     }
 
-    public int getMinResources() {
-        return minResources;
+    public int getMinQuantity() {
+        return minQuantity;
     }
 
-    public void setMinResources(int minResources) {
-        this.minResources = minResources;
+    public void setMinQuantity(int minQuantity) {
+        this.minQuantity = minQuantity;
     }
 
     public int getNumberOfProducers() {

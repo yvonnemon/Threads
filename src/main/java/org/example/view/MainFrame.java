@@ -17,7 +17,7 @@ public class MainFrame extends JFrame implements Runnable {
     public MainFrame(Model model) {
         setTitle("ThreadLab");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1200, 800);
+        setSize(1400, 800);
         setLocationRelativeTo(null); // Center on screen
 
         setLayout(new BorderLayout());
@@ -37,14 +37,27 @@ public class MainFrame extends JFrame implements Runnable {
     public void updateTable(Model model) {
 
         SwingUtilities.invokeLater(() -> {
-            Object[][] tableResources = new Object[model.getTotalResources()][6];
+            Object[][] tableResources = new Object[model.getTotalResources()][8];
             for (int i = 0; i < tableResources.length; i++) {
                 tableResources[i][0] = model.getResources().get(i).toString();
+                // TODO revisar este para que no se vea si hay under/over flow
                 tableResources[i][1] = model.getResources().get(i).getQuantity();
                 tableResources[i][2] = model.getResources().get(i).getMinQuantity();
                 tableResources[i][3] = model.getResources().get(i).getMaxQuantity();
                 tableResources[i][4] = model.getNumberOfConsumers();
                 tableResources[i][5] = model.getNumberOfProducers();
+                if(model.getResources().get(i).getQuantity() > model.getResources().get(i).getMaxQuantity()) {
+                    tableResources[i][6] = model.getResources().get(i).getQuantity() -
+                            model.getResources().get(i).getMaxQuantity(); //overflow
+                    tableResources[i][7] = 0; //underflow
+
+                } else if (model.getResources().get(i).getQuantity() < model.getResources().get(i).getMinQuantity()) {
+                    tableResources[i][6] = 0;
+                    tableResources[i][7] = model.getResources().get(i).getMinQuantity() - model.getResources().get(i).getQuantity();
+                } else {
+                    tableResources[i][6] = 0;
+                    tableResources[i][7] = 0;
+                }
             }
 
             Object[][] tableProducers = new Object[model.getThreadProducers().size()][7];
@@ -72,7 +85,6 @@ public class MainFrame extends JFrame implements Runnable {
 
             dataPanel.updatePanel1(tableResources);
             dataPanel.updatePanel2(tableConsumers);
-
             dataPanel.updatePanel3(tableProducers);
         });
 
