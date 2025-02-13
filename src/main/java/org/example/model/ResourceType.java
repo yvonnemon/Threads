@@ -11,11 +11,19 @@ public class ResourceType {
     private List<Producer> producers;
     private List<Consumer> consumers;
 
-    public synchronized void addResource(){
+    public synchronized void addSyncResource(){
         quantity++;
     }
 
-    public synchronized void removeResource(){
+    public synchronized void removeSyncResource(){
+        quantity--;
+    }
+
+    public void addResource(){
+        quantity++;
+    }
+
+    public void removeResource(){
         quantity--;
     }
 

@@ -1,7 +1,8 @@
 package org.example.model;
 
 
-import java.time.LocalDate;
+import org.example.controller.Controller;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -22,6 +23,10 @@ public class Producer implements Runnable {
         this.id = id;
         this.status = status;
         this.startTime = LocalDateTime.now();
+    }
+
+    public void syncProduce() {
+        this.resourceType.addSyncResource();
     }
 
     public void produce() {
@@ -97,7 +102,12 @@ public class Producer implements Runnable {
                     break;
                 }
                 Thread.sleep(1);  // This makes the thread enter TIMED_WAITING
-                produce();  // Calls ClassA.add()
+                    if(Controller.getInstance().getModel().isSynchronize()) {
+                        syncProduce();
+                    } else {
+                        produce();
+                    }
+
                 }
                 //break;
             } catch (InterruptedException e) {

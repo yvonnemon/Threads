@@ -25,6 +25,8 @@ public class Model {
     private int consumerDelayMin;
     private int consumerDelayMax;
 
+    private boolean synchronize;
+
     private List<Consumer> consumers = new ArrayList<>();
     private List<Producer> producers = new ArrayList<>();
     private List<ResourceType> resources = new ArrayList<>();
@@ -37,6 +39,7 @@ public class Model {
     }
 
     public void startButton() throws InterruptedException {
+        System.out.println(synchronize);
         //for i en total > crear resources; for i en resources > crear produces/consumers
         //pero el total es un random entre el max y min
 
@@ -45,10 +48,10 @@ public class Model {
         Random random = new Random();
         //int randomResources = random.nextInt(maxResources - minResources + 2);
 
-        int randomResources = random.nextInt(10) + 1;
+       // int randomResources = random.nextInt(10) + 1;
 
-        this.totalResources = randomResources;
-        for (int i = 0; i < randomResources; i++) {
+        //this.totalResources = randomResources;
+        for (int i = 0; i < this.totalResources; i++) {
             ResourceType resourceType = new ResourceType();
             int quantity = random.nextInt(maxQuantity - minQuantity + 2);
             resourceType.setMaxQuantity(maxQuantity);
@@ -190,6 +193,13 @@ public class Model {
         System.out.println("All threads have been stopped.");
     }
 
+    public boolean isSynchronize() {
+        return synchronize;
+    }
+
+    public void setSynchronize(boolean synchronize) {
+        this.synchronize = synchronize;
+    }
 
     public int getStartDelayMin() {
         return startDelayMin;

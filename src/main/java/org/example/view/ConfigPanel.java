@@ -12,6 +12,7 @@ public class ConfigPanel extends JPanel {
 
     private final JTable centerTable;
     private static DefaultTableModel tableModel;
+    private static JCheckBox checkBox;
 
     public ConfigPanel() {
         setLayout(new BorderLayout());
@@ -47,11 +48,28 @@ public class ConfigPanel extends JPanel {
         addRow("Consumer Delay Min", "2");
         addRow("Consumer Delay Max", "2");
 
+        //tableModel.addRow(new Object[]{"Sync", false}); // Checkbox row
+
         centerTable = new JTable(tableModel);
         styleTable(centerTable);  // Apply custom styles
-
+//
         JScrollPane centerScrollPane = new JScrollPane(centerTable);
+        //add(centerScrollPane, BorderLayout.CENTER);
+
+        checkBox = new JCheckBox("Synchronize");
+        checkBox.setSelected(true);
+        checkBox.setFont(new Font("Arial", Font.BOLD, 14));
+        checkBox.setHorizontalAlignment(SwingConstants.CENTER);
+        checkBox.setBackground(new Color(240, 240, 240)); // Match panel background
+
+        // ✅ Panel for checkbox to add spacing
+        JPanel checkboxPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        checkboxPanel.add(checkBox);
+        checkboxPanel.setBorder(new EmptyBorder(10, 0, 0, 0)); // Add spacing above checkbox
+
+        // ✅ Add components
         add(centerScrollPane, BorderLayout.CENTER);
+        add(checkboxPanel, BorderLayout.SOUTH);
     }
 
     // Method to add a normal row
@@ -100,11 +118,15 @@ public class ConfigPanel extends JPanel {
             table.getColumnModel().getColumn(i).setCellRenderer(renderer);
         }
     }
-
+    public static boolean isFeatureEnabled() {
+        return checkBox.isSelected();
+    }
     public static Model getConfigData() {
         int rowCount = tableModel.getRowCount();
 
         Model data = new Model();
+        boolean isSynced = isFeatureEnabled();
+        data.setSynchronize(isSynced);
 
         for (int row = 0; row < rowCount; row++) {
                // data[row][col] = tableModel.getValueAt(row, col);

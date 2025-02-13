@@ -2,10 +2,8 @@ package org.example.model;
 
 import org.example.controller.Controller;
 
-import javax.swing.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class Consumer implements Runnable {
     private volatile boolean shouldStop = false;
@@ -27,8 +25,56 @@ public class Consumer implements Runnable {
         this.startTime = LocalDateTime.now();
     }
 
+    public void syncConsume() {
+        this.resourceType.removeSyncResource();
+    }
+
     public void consume() {
         this.resourceType.removeResource();
+    }
+
+    @Override
+    public String toString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+
+        return startTime.format(formatter);
+    }
+
+    public void stop() {
+        shouldStop = true;
+    }
+
+    @Override
+    public void run() {
+        //while (!shouldStop) {
+            try {
+                for (int i = 0; i < 1000; i++) {
+                    this.setStatus(Stauts.RUNNABLE);
+                    if (shouldStop) {
+                        break;
+                    }
+                    Thread.sleep(1);  // This makes the thread enter TIMED_WAITING
+                    if(Controller.getInstance().getModel().isSynchronize()) {
+                         syncConsume();
+                    } else {
+                       consume();
+                    }
+
+                 }
+              //  break;
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+       // }
+    }
+
+    public boolean isShouldStop() {
+        return shouldStop;
+    }
+
+    public void setShouldStop(boolean shouldStop) {
+        this.shouldStop = shouldStop;
     }
 
     public Stauts getStatus() {
@@ -63,14 +109,6 @@ public class Consumer implements Runnable {
         this.minDelay = minDelay;
     }
 
-    public ResourceType getResourceType() {
-        return resourceType;
-    }
-
-    public void setResourceType(ResourceType resourceType) {
-        this.resourceType = resourceType;
-    }
-
     public int getId() {
         return id;
     }
@@ -79,36 +117,11 @@ public class Consumer implements Runnable {
         this.id = id;
     }
 
-    @Override
-    public String toString() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-
-        return startTime.format(formatter);
+    public ResourceType getResourceType() {
+        return resourceType;
     }
 
-    public void stop() {
-        shouldStop = true;
+    public void setResourceType(ResourceType resourceType) {
+        this.resourceType = resourceType;
     }
-
-    @Override
-    public void run() {
-        //while (!shouldStop) {
-            try {
-                for (int i = 0; i < 1000; i++) {
-                    this.setStatus(Stauts.RUNNABLE);
-                    if (shouldStop) {
-                        break;
-                    }
-                    Thread.sleep(1);  // This makes the thread enter TIMED_WAITING
-                consume();  // Calls ClassA.add()
-                 }
-              //  break;
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-       // }
-    }
-
-
 }
