@@ -21,7 +21,7 @@ public class ControlPanel extends JPanel {
                 new TitledBorder(new LineBorder(new Color(60, 63, 65), 2), "Details Panel"),
                 new EmptyBorder(10, 10, 10, 10)
         ));
-        // ✅ Table Model (6 Rows, Non-Editable)
+        // Table Model (6 Rows, Non-Editable)
         String[] columnNames = {"Parameter", "Value"};
         Object[][] data = {
                 {"Total Resources", "0"},
@@ -29,6 +29,7 @@ public class ControlPanel extends JPanel {
                 {"Total Consumers", "0"},
                 {"Started At", "0"},
                 {"Synchronized", "Default"},
+                {"Stock Control", "Default"},
                 {"Threads #", "Swing only"}
         };
 
@@ -43,7 +44,7 @@ public class ControlPanel extends JPanel {
         styleTable(leftTable); // 🔥 Apply custom styles
 
         JScrollPane leftScrollPane = new JScrollPane(leftTable);
-        leftScrollPane.setBorder(new LineBorder(new Color(150, 150, 150), 1)); // ✅ Border for the Table
+        leftScrollPane.setBorder(new LineBorder(new Color(150, 150, 150), 1));
         add(leftScrollPane, BorderLayout.CENTER);
 
         // Buttons for the left panel
@@ -60,8 +61,9 @@ public class ControlPanel extends JPanel {
         tableModel.setValueAt(Controller.getInstance().getModel().getConsumers().size(), 2, 1);
         tableModel.setValueAt(Controller.getInstance().getModel().toString(), 3, 1);
         tableModel.setValueAt(Controller.getInstance().getModel().isSynchronize() ? "Yes" : "No", 4, 1);
+       // tableModel.setValueAt(Controller.getInstance().getModel().isSynchronize() ? "Yes" : "No", 4, 1);
         int x = Controller.getInstance().getModel().getThreadConsumer().size() + Controller.getInstance().getModel().getThreadProducers().size();
-        tableModel.setValueAt(x, 5, 1);
+        tableModel.setValueAt(x, 6, 1);
     }
 
     private void styleTable(JTable table) {

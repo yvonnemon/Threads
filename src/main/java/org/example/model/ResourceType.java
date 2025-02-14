@@ -12,10 +12,12 @@ public class ResourceType {
     private List<Consumer> consumers;
 
     public synchronized void addSyncResource(){
+        System.out.println("produce");
         quantity++;
     }
 
     public synchronized void removeSyncResource(){
+        System.out.println("consume");
         quantity--;
     }
 

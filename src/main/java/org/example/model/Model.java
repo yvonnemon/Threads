@@ -29,6 +29,7 @@ public class Model {
     private int consumerDelayMax;
 
     private boolean synchronize;
+    private boolean stock;
 
     private List<Consumer> consumers = new ArrayList<>();
     private List<Producer> producers = new ArrayList<>();
@@ -36,6 +37,7 @@ public class Model {
 
     private List<Thread> threadConsumer = new ArrayList<>();
     private List<Thread> threadProducers = new ArrayList<>();
+
 
 
     public Model() {
@@ -347,5 +349,13 @@ public class Model {
 
         return x.format(formatter);
         //return "Model{}";
+    }
+
+    public void setStock(boolean stock) {
+        this.stock = stock;
+    }
+
+    public boolean isStock() {
+        return stock;
     }
 }

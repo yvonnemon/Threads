@@ -13,6 +13,7 @@ public class ConfigPanel extends JPanel {
     private final JTable centerTable;
     private static DefaultTableModel tableModel;
     private static JCheckBox checkBox;
+    private static JCheckBox stockBox;
 
     public ConfigPanel() {
         setLayout(new BorderLayout());
@@ -63,9 +64,16 @@ public class ConfigPanel extends JPanel {
         checkBox.setHorizontalAlignment(SwingConstants.CENTER);
         checkBox.setBackground(new Color(240, 240, 240)); // Match panel background
 
+        stockBox = new JCheckBox("Set Stock");
+        stockBox.setSelected(true);
+        stockBox.setFont(new Font("Arial", Font.BOLD, 14));
+        stockBox.setHorizontalAlignment(SwingConstants.CENTER);
+        stockBox.setBackground(new Color(240, 240, 240)); // Match panel background
+
         // ✅ Panel for checkbox to add spacing
         JPanel checkboxPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         checkboxPanel.add(checkBox);
+        checkboxPanel.add(stockBox);
         checkboxPanel.setBorder(new EmptyBorder(10, 0, 0, 0)); // Add spacing above checkbox
 
         // ✅ Add components
@@ -119,15 +127,23 @@ public class ConfigPanel extends JPanel {
             table.getColumnModel().getColumn(i).setCellRenderer(renderer);
         }
     }
-    public static boolean isFeatureEnabled() {
+
+    public static boolean isSynced() {
         return checkBox.isSelected();
     }
+
+    public static boolean isStocked() {
+        return stockBox.isSelected();
+    }
+
     public static Model getConfigData() {
         int rowCount = tableModel.getRowCount();
 
         Model data = new Model();
-        boolean isSynced = isFeatureEnabled();
+        boolean isSynced = isSynced();
         data.setSynchronize(isSynced);
+        boolean stocked = isStocked();
+        data.setStock(stocked);
 
         for (int row = 0; row < rowCount; row++) {
                // data[row][col] = tableModel.getValueAt(row, col);

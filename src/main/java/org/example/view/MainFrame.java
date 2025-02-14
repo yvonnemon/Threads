@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLOutput;
 
 public class MainFrame extends JFrame implements Runnable {
 
@@ -23,7 +24,7 @@ public class MainFrame extends JFrame implements Runnable {
         setLayout(new BorderLayout());
 
         // Add all panels
-        //add(new TitlePanel(), BorderLayout.NORTH); // Title at the top
+
         ControlPanel controlPanel = new ControlPanel();
         Controller.getInstance().setControlPanel(controlPanel);
 
@@ -44,20 +45,25 @@ public class MainFrame extends JFrame implements Runnable {
             for (int i = 0; i < tableResources.length; i++) {
                 tableResources[i][0] = model.getResources().get(i).toString();
                 // TODO revisar este para que no se vea si hay under/over flow
-                tableResources[i][1] = model.getResources().get(i).getQuantity();
+
                 tableResources[i][2] = model.getResources().get(i).getMinQuantity();
                 tableResources[i][3] = model.getResources().get(i).getMaxQuantity();
                 tableResources[i][4] = model.getNumberOfConsumers();
                 tableResources[i][5] = model.getNumberOfProducers();
-                if(model.getResources().get(i).getQuantity() > model.getResources().get(i).getMaxQuantity()) {
+                if(model.getResources().get(i).getQuantity() > model.getResources().get(i).getMaxQuantity()) { //si cantidad > maxQ pinta overflow
+                   // System.out.println("DEBERIA OVERFLOW");
                     tableResources[i][6] = model.getResources().get(i).getQuantity() -
                             model.getResources().get(i).getMaxQuantity(); //overflow
                     tableResources[i][7] = 0; //underflow
-
-                } else if (model.getResources().get(i).getQuantity() < model.getResources().get(i).getMinQuantity()) {
+                    tableResources[i][1] = model.getResources().get(i).getMaxQuantity();// quantity
+                } else if (model.getResources().get(i).getQuantity() < model.getResources().get(i).getMinQuantity()) { //si cantidad < minQ pinta underflow
+                    //System.out.println(" DEBERIA UNDERFLOW");
                     tableResources[i][6] = 0;
                     tableResources[i][7] = model.getResources().get(i).getMinQuantity() - model.getResources().get(i).getQuantity();
+                    tableResources[i][1] = model.getResources().get(i).getMinQuantity();
                 } else {
+                   // System.out.println("TAMOS ENTRE LOS NUMEROS");
+                    tableResources[i][1] = model.getResources().get(i).getQuantity();
                     tableResources[i][6] = 0;
                     tableResources[i][7] = 0;
                 }

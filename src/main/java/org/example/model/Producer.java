@@ -97,9 +97,35 @@ public class Producer implements Runnable {
     public void run() {
         int randomValue = ThreadLocalRandom.current().nextInt(Controller.getInstance().getModel().getConsumerDelayMin(), Controller.getInstance().getModel().getProducerDelayMax() + 1);
 
-        //while (!shouldStop) {
         try {
-            if (Controller.getInstance().getModel().getCyclesAmount() != 0) {
+            if (Controller.getInstance().getModel().isStock()) { //stock esta checked
+                int a = Controller.getInstance().getModel().getMaxQuantity();
+                System.out.println(a+" max    "+resourceType.getQuantity());
+
+                itsStock(randomValue);
+            } else { //aqui no
+                notStock(randomValue);
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void itsStock(int randomValue) throws InterruptedException { //si es sync viene aqui
+        //aqui la condicion que dice cuando hacer accion si no hay stock
+        int a = Controller.getInstance().getModel().getMaxQuantity();
+        if(resourceType.getQuantity() < Controller.getInstance().getModel().getMaxQuantity()){
+            //System.out.println("cantidad minima alcanzada, sudo de producir");
+            doAction(randomValue);
+        }
+    }
+
+    private void notStock(int randomValue) throws InterruptedException { //no sync
+        doAction(randomValue);
+    }
+
+    private void doAction(int randomValue) throws InterruptedException {
+        if (Controller.getInstance().getModel().getCyclesAmount() != 0) {
                 for (int i = 0; i < Controller.getInstance().getModel().getCyclesAmount(); i++) {
                     this.setStatus(Stauts.RUNNABLE);
                     if (shouldStop) {
@@ -117,7 +143,7 @@ public class Producer implements Runnable {
                 while (!shouldStop) {
                     this.setStatus(Stauts.RUNNABLE);
 
-                    Thread.sleep(1);  // This makes the thread enter TIMED_WAITING
+                    Thread.sleep(randomValue);  // This makes the thread enter TIMED_WAITING
                     if (Controller.getInstance().getModel().isSynchronize()) {
                         syncProduce();
                     } else {
@@ -125,11 +151,5 @@ public class Producer implements Runnable {
                     }
                 }
             }
-
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        //}
     }
 }
