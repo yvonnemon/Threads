@@ -1,6 +1,8 @@
 package org.example.model;
 
 import javax.swing.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -18,6 +20,7 @@ public class Model {
 
     private int startDelayMin;
     private int startDelayMax;
+    private int cyclesAmount;
 
     private int producerDelayMin;
     private int producerDelayMax;
@@ -233,6 +236,14 @@ public class Model {
         this.producerDelayMax = producerDelayMax;
     }
 
+    public int getCyclesAmount() {
+        return cyclesAmount;
+    }
+
+    public void setCyclesAmount(int cyclesAmount) {
+        this.cyclesAmount = cyclesAmount;
+    }
+
     public int getConsumerDelayMin() {
         return consumerDelayMin;
     }
@@ -327,5 +338,14 @@ public class Model {
 
     public void setResources(List<ResourceType> resources) {
         this.resources = resources;
+    }
+
+    @Override
+    public String toString() {
+        LocalDateTime x = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+
+        return x.format(formatter);
+        //return "Model{}";
     }
 }

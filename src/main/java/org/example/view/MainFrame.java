@@ -24,7 +24,10 @@ public class MainFrame extends JFrame implements Runnable {
 
         // Add all panels
         //add(new TitlePanel(), BorderLayout.NORTH); // Title at the top
-        add(new ControlPanel(), BorderLayout.CENTER);  // Left panel
+        ControlPanel controlPanel = new ControlPanel();
+        Controller.getInstance().setControlPanel(controlPanel);
+
+        add(controlPanel, BorderLayout.CENTER);  // Left panel
         add(new ConfigPanel(), BorderLayout.WEST); // Center panel
 
         dataPanel = new DataPanel();

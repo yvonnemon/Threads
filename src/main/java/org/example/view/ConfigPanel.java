@@ -40,6 +40,7 @@ public class ConfigPanel extends JPanel {
         addHeader("Starting config");
         addRow("Start Delay Min", "2");
         addRow("Start Delay Max", "2");
+        addRow("Amount Cycles", "0");
 
         addHeader("Action Delay");
         addRow("Producer Delay Min", "2");
@@ -143,6 +144,8 @@ public class ConfigPanel extends JPanel {
                     data.setNumberOfConsumers(Integer.parseInt(tableModel.getValueAt(row, 1).toString()));
                 } else if (tableModel.getValueAt(row, 0).equals("Start Delay Min")) {
                     data.setStartDelayMin(Integer.parseInt(tableModel.getValueAt(row, 1).toString()));
+                }else if (tableModel.getValueAt(row, 0).equals("Amount Cycles")) {
+                    data.setCyclesAmount(Integer.parseInt(tableModel.getValueAt(row, 1).toString()));
                 } else if (tableModel.getValueAt(row, 0).equals("Start Delay Max")) {
                     data.setStartDelayMax(Integer.parseInt(tableModel.getValueAt(row, 1).toString()));
                 } else if (tableModel.getValueAt(row, 0).equals("Producer Delay Min")) {

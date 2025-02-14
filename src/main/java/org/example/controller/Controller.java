@@ -5,6 +5,7 @@ import org.example.model.Model;
 import org.example.model.Producer;
 import org.example.model.ResourceType;
 import org.example.view.ConfigPanel;
+import org.example.view.ControlPanel;
 import org.example.view.DataPanel;
 import org.example.view.MainFrame;
 
@@ -15,6 +16,7 @@ public class Controller {
     private static Controller instance;
     private Model model;
     private MainFrame mainFrame;
+    private ControlPanel controlPanel;
 
     public static Controller getInstance() {
         if (instance == null) {
@@ -41,7 +43,7 @@ public class Controller {
         main.start();
 
         x.startButton();
-
+        controlPanel.updateRow();
 //        mainFrame.revalidate();
 //        mainFrame.repaint();
 
@@ -69,5 +71,9 @@ public class Controller {
 
     public MainFrame getMainFrame() {
         return mainFrame;
+    }
+
+    public void setControlPanel(ControlPanel controlPanel) {
+        this.controlPanel = controlPanel;
     }
 }

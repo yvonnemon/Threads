@@ -4,6 +4,7 @@ import org.example.controller.Controller;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Consumer implements Runnable {
     private volatile boolean shouldStop = false;
@@ -46,22 +47,35 @@ public class Consumer implements Runnable {
 
     @Override
     public void run() {
+        int randomValue = ThreadLocalRandom.current().nextInt(Controller.getInstance().getModel().getConsumerDelayMin(), Controller.getInstance().getModel().getProducerDelayMax() + 1);
         //while (!shouldStop) {
             try {
-                for (int i = 0; i < 1000; i++) {
-                    this.setStatus(Stauts.RUNNABLE);
-                    if (shouldStop) {
-                        break;
-                    }
-                    Thread.sleep(1);  // This makes the thread enter TIMED_WAITING
-                    if(Controller.getInstance().getModel().isSynchronize()) {
-                         syncConsume();
-                    } else {
-                       consume();
-                    }
+                if (Controller.getInstance().getModel().getCyclesAmount() != 0) {
+                    for (int i = 0; i < Controller.getInstance().getModel().getCyclesAmount(); i++) {
+                        this.setStatus(Stauts.RUNNABLE);
+                        if (shouldStop) {
+                            break;
+                        }
+                        Thread.sleep(randomValue);  // This makes the thread enter TIMED_WAITING
+                        if (Controller.getInstance().getModel().isSynchronize()) {
+                            syncConsume();
+                        } else {
+                            consume();
+                        }
 
-                 }
-              //  break;
+                    }
+                } else {
+                    while (!shouldStop) {
+                        this.setStatus(Stauts.RUNNABLE);
+
+                        Thread.sleep(1);  // This makes the thread enter TIMED_WAITING
+                        if (Controller.getInstance().getModel().isSynchronize()) {
+                            syncConsume();
+                        } else {
+                            consume();
+                        }
+                    }
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
