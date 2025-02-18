@@ -29,14 +29,14 @@ public class ConfigPanel extends JPanel {
         };
 
         // Add Configurable Parameters with Headers
-        addRow("Total Resources", "2");
+        addRow("Total Resources", "1");
 
         addHeader("Resource Settings");
-        addRow("Max Quantity", "200");
-        addRow("Min Quantity", "10");
+        addRow("Max Quantity", "10");
+        addRow("Min Quantity", "0");
 
-        addRow("Number of producers", "2");
-        addRow("Number of consumers", "2");
+        addRow("Number of producers", "1");
+        addRow("Number of consumers", "10");
 
         addHeader("Starting config");
         addRow("Start Delay Min", "2");
@@ -44,11 +44,11 @@ public class ConfigPanel extends JPanel {
         addRow("Amount Cycles", "0");
 
         addHeader("Action Delay");
-        addRow("Producer Delay Min", "2");
-        addRow("Producer Delay Max", "2");
+        addRow("Producer Delay Min", "2500");
+        addRow("Producer Delay Max", "2500");
 
-        addRow("Consumer Delay Min", "2");
-        addRow("Consumer Delay Max", "2");
+        addRow("Consumer Delay Min", "2500");
+        addRow("Consumer Delay Max", "2500");
 
         //tableModel.addRow(new Object[]{"Sync", false}); // Checkbox row
 

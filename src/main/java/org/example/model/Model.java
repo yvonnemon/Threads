@@ -139,16 +139,10 @@ public class Model {
                 System.out.println("All threads have finished creation.");
                 return null;
             }
-            @Override
-            protected void done() {
-                System.out.println("SwingWorker finished!");
-            //TODO
-            }
-
         };
 
-        worker.execute();
-        worker2.execute();// Runs in a background thread
+        worker2.execute();
+        worker.execute();// Runs in a background thread
     }
 
     private void createConsumers(ResourceType resourceType) {

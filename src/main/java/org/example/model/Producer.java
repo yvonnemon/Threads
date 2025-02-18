@@ -5,6 +5,7 @@ import org.example.controller.Controller;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Producer implements Runnable {
@@ -95,20 +96,23 @@ public class Producer implements Runnable {
 
     @Override
     public void run() {
+        Random r = new Random();
+        //int random = r.nextInt(Controller.getInstance().getModel().getProducerDelayMax() - Controller.getInstance().getModel().getProducerDelayMin()) + Controller.getInstance().getModel().getProducerDelayMin();
         int randomValue = ThreadLocalRandom.current().nextInt(Controller.getInstance().getModel().getConsumerDelayMin(), Controller.getInstance().getModel().getProducerDelayMax() + 1);
+        //while (!shouldStop) {
+            try {
+                if (Controller.getInstance().getModel().isStock()) { //stock esta checked
+                    int a = Controller.getInstance().getModel().getMaxQuantity();
+                    System.out.println(a+" max    "+resourceType.getQuantity());
 
-        try {
-            if (Controller.getInstance().getModel().isStock()) { //stock esta checked
-                int a = Controller.getInstance().getModel().getMaxQuantity();
-                System.out.println(a+" max    "+resourceType.getQuantity());
-
-                itsStock(randomValue);
-            } else { //aqui no
-                notStock(randomValue);
+                    itsStock(randomValue);
+                } else { //aqui no
+                    notStock(randomValue);
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        //}
     }
 
     private void itsStock(int randomValue) throws InterruptedException { //si es sync viene aqui
@@ -123,33 +127,79 @@ public class Producer implements Runnable {
     private void notStock(int randomValue) throws InterruptedException { //no sync
         doAction(randomValue);
     }
-
     private void doAction(int randomValue) throws InterruptedException {
         if (Controller.getInstance().getModel().getCyclesAmount() != 0) {
-                for (int i = 0; i < Controller.getInstance().getModel().getCyclesAmount(); i++) {
-                    this.setStatus(Stauts.RUNNABLE);
-                    if (shouldStop) {
-                        break;
-                    }
-                    Thread.sleep(randomValue);  // This makes the thread enter TIMED_WAITING
-                    if (Controller.getInstance().getModel().isSynchronize()) {
-                        syncProduce();
-                    } else {
-                        produce();
-                    }
-
+            for (int i = 0; i < Controller.getInstance().getModel().getCyclesAmount(); i++) {
+                this.setStatus(Stauts.RUNNABLE);
+                if (shouldStop) {
+                    break;
                 }
-            } else {
-                while (!shouldStop) {
-                    this.setStatus(Stauts.RUNNABLE);
+                Thread.sleep(randomValue);  // This makes the thread enter TIMED_WAITING
+                if (Controller.getInstance().getModel().isSynchronize()) {
+                    syncProduce();
+                } else {
+                    produce();
+                }
 
-                    Thread.sleep(randomValue);  // This makes the thread enter TIMED_WAITING
-                    if (Controller.getInstance().getModel().isSynchronize()) {
-                        syncProduce();
-                    } else {
-                        produce();
-                    }
+            }
+        } else {
+            while (!shouldStop) {
+                this.setStatus(Stauts.RUNNABLE);
+
+                Thread.sleep(randomValue);  // This makes the thread enter TIMED_WAITING
+                if (Controller.getInstance().getModel().isSynchronize()) {
+                    syncProduce();
+                } else {
+                    produce();
                 }
             }
+        }
     }
+   /* private void doAction(int randomValue) throws InterruptedException {
+        if (Controller.getInstance().getModel().getCyclesAmount() != 0) {
+            for (int i = 0; i < Controller.getInstance().getModel().getCyclesAmount(); i++) {
+                this.setStatus(Stauts.RUNNABLE);
+                if (shouldStop) {
+                    break;
+                }
+
+                synchronized (resourceType) {
+                    while (resourceType.getQuantity() >= Controller.getInstance().getModel().getMaxQuantity()) {
+                        System.out.println("Producer waiting: Stock is full...");
+                        resourceType.wait(); // Producer waits if stock is full
+                        resourceType.notifyAll();
+                    }
+                    if (Controller.getInstance().getModel().isSynchronize()) {
+                        syncProduce();
+                    } else {
+                        produce();
+                    }
+                    // Produce after waking up
+                    resourceType.notifyAll(); // Wake up waiting consumers
+                }
+
+                Thread.sleep(randomValue);  // Simulating production delay
+            }
+        } else {
+            while (!shouldStop) {
+                this.setStatus(Stauts.RUNNABLE);
+
+                synchronized (resourceType) {
+                    while (resourceType.getQuantity() >= Controller.getInstance().getModel().getMaxQuantity()) {
+                        System.out.println("2Producer waiting: Stock is full...");
+                        resourceType.wait(); // Producer waits if stock is full
+                        resourceType.notifyAll();
+                    }
+                    if (Controller.getInstance().getModel().isSynchronize()) {
+                        syncProduce();
+                    } else {
+                        produce();
+                    }
+                    resourceType.notifyAll(); // Wake up waiting consumers
+                }
+
+                Thread.sleep(randomValue);  // Simulating production delay
+            }
+        }
+    }*/
 }
